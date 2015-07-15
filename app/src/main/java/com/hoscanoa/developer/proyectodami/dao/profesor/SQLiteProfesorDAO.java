@@ -104,7 +104,7 @@ public class SQLiteProfesorDAO implements ProfesorDAO {
             values.put("profesorId", obj.getProfesorId());
             values.put("nombres", obj.getNombres());
             values.put("apellidoPaterno", obj.getApellidoPaterno());
-            values.put("apellidoMaterno", obj.getApellidoMaterno()));
+            values.put("apellidoMaterno", obj.getApellidoMaterno());
             r=(int)database.insert("PROFESORES",null,values);
         }
         catch (Exception e){
