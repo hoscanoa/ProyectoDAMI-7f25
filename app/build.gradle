@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
-    compileOptions.encoding "utf-8"
     defaultConfig {
         applicationId "com.hoscanoa.developer.proyectodami"
         minSdkVersion 15

@@ -68,12 +68,12 @@ public class SQLiteCicloDAO implements CicloDAO {
     public void insertarCiclos(ArrayList<Ciclo> ciclos) {
         try {
             DbHelper helper = new DbHelper(context);
-            SQLiteDatabase database = helper.getWritableDatabase()
-            database.insert("Ciclos",null,);
+            SQLiteDatabase database = helper.getWritableDatabase();
+            //database.insert("Ciclos",null,);
         }
         catch (Exception e){
             e.printStackTrace();
         }
-        return lista;
+        //return lista;
     }
 }
