@@ -1,9 +1,11 @@
 package com.hoscanoa.developer.proyectodami;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
@@ -17,10 +19,34 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hoscanoa.developer.proyectodami.beans.Alumno;
+import com.hoscanoa.developer.proyectodami.beans.Calificacion;
+import com.hoscanoa.developer.proyectodami.beans.CargaDocente;
+import com.hoscanoa.developer.proyectodami.beans.Carrera;
+import com.hoscanoa.developer.proyectodami.beans.CarreraCurso;
+import com.hoscanoa.developer.proyectodami.beans.Ciclo;
+import com.hoscanoa.developer.proyectodami.beans.Curso;
+import com.hoscanoa.developer.proyectodami.beans.CursoEvaluacion;
+import com.hoscanoa.developer.proyectodami.beans.Estado;
+import com.hoscanoa.developer.proyectodami.beans.Evaluacion;
+import com.hoscanoa.developer.proyectodami.beans.Grupo;
+import com.hoscanoa.developer.proyectodami.beans.ModalidadEstudio;
+import com.hoscanoa.developer.proyectodami.beans.Seccion;
 import com.hoscanoa.developer.proyectodami.dao.Factory;
 import com.hoscanoa.developer.proyectodami.dao.alumno.AlumnoDAO;
+import com.hoscanoa.developer.proyectodami.dao.calificacion.CalificacionDAO;
+import com.hoscanoa.developer.proyectodami.dao.carerra.CarerraDAO;
+import com.hoscanoa.developer.proyectodami.dao.cargaDocente.CargaDocenteDAO;
+import com.hoscanoa.developer.proyectodami.dao.carreraCurso.CarreraCursoDAO;
+import com.hoscanoa.developer.proyectodami.dao.curso.CursoDAO;
+import com.hoscanoa.developer.proyectodami.dao.cursoEvaluacion.CursoEvaluacionDAO;
+import com.hoscanoa.developer.proyectodami.dao.estado.EstadoDAO;
+import com.hoscanoa.developer.proyectodami.dao.evaluacion.EvaluacionDAO;
+import com.hoscanoa.developer.proyectodami.dao.grupo.GrupoDAO;
+import com.hoscanoa.developer.proyectodami.dao.seccion.SeccionDAO;
+import com.hoscanoa.developer.proyectodami.servicio.Servicio;
 import com.hoscanoa.developer.proyectodami.util.InputFilterMinMax;
 
 import java.util.ArrayList;
@@ -31,6 +57,8 @@ public class ListadoAlumnosFragment extends Fragment {
     Context context;
     int cicloId, cursoId, seccionId, grupoId;
     TableLayout tabla;
+    ArrayList<Alumno> alumnos;
+    ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,11 +77,16 @@ public class ListadoAlumnosFragment extends Fragment {
         seccionId = getArguments().getInt("seccionId");
         grupoId = getArguments().getInt("grupoId");
 
+
+        //Jalamos datos del SW
+
+        progressDialog = new ProgressDialog(getActivity());
+        new ImportarAlumnos().execute();
+
         tabla = (TableLayout) rootView.findViewById(R.id.tblListado);
         cargarListado();
         return rootView;
     }
-
 
     public void cargarListado() {
 
@@ -160,6 +193,25 @@ public class ListadoAlumnosFragment extends Fragment {
             tabla.addView(v);
         }
 
+    }
+
+
+    private class ImportarAlumnos extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            Factory factory = Factory.getFactory(Factory.TIPO_SQLITE);
+            AlumnoDAO alumnoDAO = factory.getAlumnoDAO(context);
+
+            Servicio servicio = new Servicio();
+            alumnos=servicio.importarAlumnos(cicloId, cursoId, seccionId, grupoId);
+            alumnoDAO.insertar(alumnos);
+            return null;
+        }
+
+
+        protected void onPostExecute(Void unused) {
+            progressDialog.dismiss();
+        }
     }
 
 }

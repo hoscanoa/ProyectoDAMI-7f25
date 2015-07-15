@@ -1,14 +1,11 @@
 package com.hoscanoa.developer.proyectodami;
 
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,24 +15,28 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hoscanoa.developer.proyectodami.beans.Calificacion;
 import com.hoscanoa.developer.proyectodami.beans.CargaDocente;
 import com.hoscanoa.developer.proyectodami.beans.Carrera;
 import com.hoscanoa.developer.proyectodami.beans.CarreraCurso;
 import com.hoscanoa.developer.proyectodami.beans.Ciclo;
 import com.hoscanoa.developer.proyectodami.beans.Curso;
 import com.hoscanoa.developer.proyectodami.beans.CursoEvaluacion;
+import com.hoscanoa.developer.proyectodami.beans.Estado;
 import com.hoscanoa.developer.proyectodami.beans.Evaluacion;
 import com.hoscanoa.developer.proyectodami.beans.Grupo;
 import com.hoscanoa.developer.proyectodami.beans.ModalidadEstudio;
 import com.hoscanoa.developer.proyectodami.beans.Profesor;
 import com.hoscanoa.developer.proyectodami.beans.Seccion;
 import com.hoscanoa.developer.proyectodami.dao.Factory;
+import com.hoscanoa.developer.proyectodami.dao.calificacion.CalificacionDAO;
 import com.hoscanoa.developer.proyectodami.dao.carerra.CarerraDAO;
 import com.hoscanoa.developer.proyectodami.dao.cargaDocente.CargaDocenteDAO;
 import com.hoscanoa.developer.proyectodami.dao.carreraCurso.CarreraCursoDAO;
 import com.hoscanoa.developer.proyectodami.dao.ciclo.CicloDAO;
 import com.hoscanoa.developer.proyectodami.dao.curso.CursoDAO;
 import com.hoscanoa.developer.proyectodami.dao.cursoEvaluacion.CursoEvaluacionDAO;
+import com.hoscanoa.developer.proyectodami.dao.estado.EstadoDAO;
 import com.hoscanoa.developer.proyectodami.dao.evaluacion.EvaluacionDAO;
 import com.hoscanoa.developer.proyectodami.dao.grupo.GrupoDAO;
 import com.hoscanoa.developer.proyectodami.dao.modalidadEstudio.ModalidadEstudioDAO;
@@ -65,6 +66,8 @@ public class ImportarFragment extends Fragment implements View.OnClickListener {
     ArrayList<CargaDocente> cargaDocentes = new  ArrayList<CargaDocente>();
     ArrayList<Carrera> carreras = new  ArrayList<Carrera>();
     ArrayList<CarreraCurso> carreraCursos = new  ArrayList<CarreraCurso>();
+    ArrayList<Calificacion> calificaciones = new  ArrayList<Calificacion>();
+    ArrayList<Estado> estados = new  ArrayList<Estado>();
 
 
     @Override
@@ -118,7 +121,7 @@ public class ImportarFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        progressDialog = new ProgressDialog(context);
+        progressDialog = new ProgressDialog(getActivity());
         new Importar().execute();
     }
 
@@ -143,6 +146,8 @@ public class ImportarFragment extends Fragment implements View.OnClickListener {
                 CursoEvaluacionDAO cursoEvaluacionDAO = factory.getCursoEvaluacionDAO(context);
                 CarerraDAO carerraDAO = factory.getCarerraDAO(context);
                 CarreraCursoDAO carreraCursoDAO=factory.getCarreraCursoDAO(context);
+                CalificacionDAO calificacionDAO = factory.getCalificacionDAO(context);
+                EstadoDAO estadoDAO = factory.getEstadoDAO(context);
 
                 grupos = (ArrayList<Grupo>) objetos.get(0);
                 secciones = (ArrayList<Seccion>)objetos.get(1);
@@ -152,6 +157,8 @@ public class ImportarFragment extends Fragment implements View.OnClickListener {
                 cursoEvaluaciones = (ArrayList<CursoEvaluacion>)objetos.get(5);
                 carreras= (ArrayList<Carrera>)objetos.get(6);
                 carreraCursos= (ArrayList<CarreraCurso>)objetos.get(7);
+                calificaciones = (ArrayList<Calificacion>)objetos.get(8);
+                estados = (ArrayList<Estado>)objetos.get(9);
 
                 grupoDAO.insertar(grupos);
                 seccionDAO.insertar(secciones);
@@ -161,6 +168,8 @@ public class ImportarFragment extends Fragment implements View.OnClickListener {
                 cursoEvaluacionDAO.insertar(cursoEvaluaciones);
                 carerraDAO.insertar(carreras);
                 carreraCursoDAO.insertar(carreraCursos);
+                calificacionDAO.insertar(calificaciones);
+                estadoDAO.insertar(estados);
             }
 
             return null;

@@ -12,6 +12,18 @@ public class Alumno implements Serializable {
     private String email;
     private int estadoId;
 
+    public Alumno(){}
+
+    public Alumno(int alumnoId, String codigo, String nombres, String apellidoPaterno, String apellidoMaterno, String email, int estadoId) {
+        this.alumnoId = alumnoId;
+        this.codigo = codigo;
+        this.nombres = nombres;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.email = email;
+        this.estadoId = estadoId;
+    }
+
     public int getAlumnoId() {
         return alumnoId;
     }

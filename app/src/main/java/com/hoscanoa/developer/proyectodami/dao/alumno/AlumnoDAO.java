@@ -11,4 +11,6 @@ import java.util.ArrayList;
 public interface AlumnoDAO extends GenericDAO<Alumno, Long>
 {
     ArrayList<Alumno> listado(int idCiclo,int idCurso,int idSeccion,int numGrupo);
+
+    void insertar(ArrayList<Alumno> alumnos);
 }

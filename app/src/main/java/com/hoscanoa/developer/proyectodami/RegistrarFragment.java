@@ -245,8 +245,6 @@ public class RegistrarFragment extends Fragment implements AdapterView.OnItemSel
             }
 
             if (error.isEmpty()) {
-
-
                 Ciclo ciclo = (Ciclo) spnCiclo.getSelectedItem();
                 Curso curso = (Curso) spnCurso.getSelectedItem();
                 Seccion seccion = (Seccion) spnSeccion.getSelectedItem();

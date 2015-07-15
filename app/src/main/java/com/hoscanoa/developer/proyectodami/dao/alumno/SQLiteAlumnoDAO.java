@@ -1,10 +1,12 @@
 package com.hoscanoa.developer.proyectodami.dao.alumno;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.hoscanoa.developer.proyectodami.beans.Alumno;
+import com.hoscanoa.developer.proyectodami.beans.Calificacion;
 import com.hoscanoa.developer.proyectodami.conexion.DbHelper;
 
 import java.util.ArrayList;
@@ -97,5 +99,33 @@ public class SQLiteAlumnoDAO implements AlumnoDAO {
             e.printStackTrace();
         }
         return alumnos;
+    }
+
+    @Override
+    public void insertar(ArrayList<Alumno> alumnos) {
+        try {
+            DbHelper helper = new DbHelper(context);
+            SQLiteDatabase database = helper.getWritableDatabase();
+
+            for(Alumno alumno : alumnos){
+                ContentValues values= new ContentValues();
+                values.put("alumnoId",alumno.getAlumnoId());
+                values.put("codigo",alumno.getCodigo());
+                values.put("nombres",alumno.getNombres());
+                values.put("apellidoPaterno",alumno.getApellidoPaterno());
+                values.put("apellidoMaterno",alumno.getApellidoMaterno());
+                values.put("email",alumno.getEmail());
+                values.put("estadoId", alumno.getEstadoId());
+                try {
+                    database.insert("ALUMNOS", null, values);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        catch (Exception e1){
+            e1.printStackTrace();
+        }
     }
 }

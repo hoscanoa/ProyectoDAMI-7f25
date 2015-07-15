@@ -5,7 +5,15 @@ import java.io.Serializable;
 public class Estado implements Serializable {
 
      private int estadoId;
-     private String descricpion;
+     private String descripcion;
+
+    public Estado(){
+
+    }
+    public Estado(int estadoId, String descripcion) {
+        this.estadoId = estadoId;
+        this.descripcion = descripcion;
+    }
 
     public int getEstadoId() {
         return estadoId;
@@ -15,12 +23,12 @@ public class Estado implements Serializable {
         this.estadoId = estadoId;
     }
 
-    public String getDescricpion() {
-        return descricpion;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescricpion(String descricpion) {
-        this.descricpion = descricpion;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }
 

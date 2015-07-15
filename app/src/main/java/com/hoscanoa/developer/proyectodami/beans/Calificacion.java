@@ -4,16 +4,24 @@ import java.io.Serializable;
 
 public class Calificacion implements Serializable {
 
-     private int notaId;
+     private int calificacionId;
      private String descripcion;
      private int nota;
 
-    public int getNotaId() {
-        return notaId;
+    public Calificacion(){}
+
+    public Calificacion(int calificacionId, String descripcion, int nota) {
+        this.calificacionId = calificacionId;
+        this.descripcion = descripcion;
+        this.nota = nota;
     }
 
-    public void setNotaId(int notaId) {
-        this.notaId = notaId;
+    public int getCalificacionId() {
+        return calificacionId;
+    }
+
+    public void setCalificacionId(int calificacionId) {
+        this.calificacionId = calificacionId;
     }
 
     public String getDescripcion() {
