@@ -20,6 +20,7 @@ import com.hoscanoa.developer.proyectodami.beans.ModalidadEstudio;
 import com.hoscanoa.developer.proyectodami.beans.Profesor;
 import com.hoscanoa.developer.proyectodami.dao.Factory;
 import com.hoscanoa.developer.proyectodami.dao.ciclo.CicloDAO;
+import com.hoscanoa.developer.proyectodami.dao.historial.HistorialDAO;
 import com.hoscanoa.developer.proyectodami.dao.modalidadEstudio.ModalidadEstudioDAO;
 import com.hoscanoa.developer.proyectodami.dao.profesor.ProfesorDAO;
 import com.hoscanoa.developer.proyectodami.servicio.Servicio;
@@ -105,7 +106,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             ProfesorDAO profesorDAO = factory.getProfesorDAO(getBaseContext());
             ModalidadEstudioDAO modalidadEstudioDAO = factory.getModalidadEstudioDAO(getBaseContext());
             CicloDAO cicloDAO = factory.getCicloDAO(getBaseContext());
-
+            HistorialDAO historialDAO = factory.getHistorialDAO(getBaseContext());
             try {
                 username = edtUsuario.getText().toString();
                 password = edtPassword.getText().toString();
@@ -117,11 +118,19 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                     modalidadEstudios = (ArrayList<ModalidadEstudio>) (objetos.get(1));
                     ciclos = (ArrayList<Ciclo>) (objetos.get(2));
 
-
-
-                    profesorDAO.insertarProfesorHistorial(profesor);
-                    modalidadEstudioDAO.insertarModalidades(modalidadEstudios);
-                    cicloDAO.insertarCiclos(ciclos);
+                    if(historialDAO.listar().size()>0)
+                    {
+                        if(historialDAO.buscaProfesor(profesor.getProfesorId())==null)
+                        {
+                            profesorDAO.insertarProfesorHistorial(profesor);
+                        }
+                    }
+                    else
+                    {
+                        profesorDAO.insertarProfesorHistorial(profesor);
+                        modalidadEstudioDAO.insertarModalidades(modalidadEstudios);
+                        cicloDAO.insertarCiclos(ciclos);
+                    }
                 }
                 else
                 {
