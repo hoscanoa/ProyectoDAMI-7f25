@@ -1,10 +1,12 @@
 package com.hoscanoa.developer.proyectodami.dao.curso;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.hoscanoa.developer.proyectodami.beans.Curso;
+import com.hoscanoa.developer.proyectodami.beans.Grupo;
 import com.hoscanoa.developer.proyectodami.conexion.DbHelper;
 
 import java.util.ArrayList;
@@ -82,6 +84,25 @@ public class SQLiteCursoDAO implements CursoDAO {
             e.printStackTrace();
         }
         return lista;
+    }
+
+    @Override
+    public void insertar(ArrayList<Curso> cursos) {
+        try {
+            DbHelper helper = new DbHelper(context);
+            SQLiteDatabase database = helper.getWritableDatabase();
+
+            for(Curso c : cursos){
+                ContentValues values= new ContentValues();
+                values.put("cursoId",c.getCursoId());
+                values.put("codigo",c.getCodigo());
+                values.put("descripcion",c.getDescripcion());
+                database.insert("CURSOS",null,values);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

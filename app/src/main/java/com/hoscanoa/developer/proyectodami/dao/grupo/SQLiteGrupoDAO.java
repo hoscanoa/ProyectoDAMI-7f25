@@ -1,9 +1,11 @@
 package com.hoscanoa.developer.proyectodami.dao.grupo;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.hoscanoa.developer.proyectodami.beans.CargaDocente;
 import com.hoscanoa.developer.proyectodami.beans.Curso;
 import com.hoscanoa.developer.proyectodami.beans.Grupo;
 import com.hoscanoa.developer.proyectodami.beans.Seccion;
@@ -76,5 +78,23 @@ public class SQLiteGrupoDAO implements GrupoDAO {
             e.printStackTrace();
         }
         return lista;
+    }
+
+    @Override
+    public void insertar(ArrayList<Grupo> grupos) {
+        try {
+            DbHelper helper = new DbHelper(context);
+            SQLiteDatabase database = helper.getWritableDatabase();
+
+            for(Grupo g: grupos){
+                ContentValues values= new ContentValues();
+                values.put("grupoId",g.getGrupoId());
+                values.put("descripcion",g.getDescripcion());
+                database.insert("GRUPOS",null,values);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

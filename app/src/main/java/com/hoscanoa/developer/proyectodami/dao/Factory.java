@@ -8,6 +8,7 @@ import com.hoscanoa.developer.proyectodami.dao.aula.AulaDAO;
 import com.hoscanoa.developer.proyectodami.dao.calificacion.CalificacionDAO;
 import com.hoscanoa.developer.proyectodami.dao.carerra.CarerraDAO;
 import com.hoscanoa.developer.proyectodami.dao.cargaDocente.CargaDocenteDAO;
+import com.hoscanoa.developer.proyectodami.dao.carreraCurso.CarreraCursoDAO;
 import com.hoscanoa.developer.proyectodami.dao.ciclo.CicloDAO;
 import com.hoscanoa.developer.proyectodami.dao.curso.CursoDAO;
 import com.hoscanoa.developer.proyectodami.dao.cursoEvaluacion.CursoEvaluacionDAO;
@@ -51,7 +52,7 @@ public abstract class Factory {
     public abstract MatriculaDAO getMatriculaDAO(Context context);
     public abstract GrupoDAO getGrupoDAO(Context context);
     public abstract HistorialDAO getHistorialDAO(Context context);
-
+    public abstract CarreraCursoDAO getCarreraCursoDAO(Context context);
 
     public static Factory getFactory(int tipo) {
         switch (tipo) {

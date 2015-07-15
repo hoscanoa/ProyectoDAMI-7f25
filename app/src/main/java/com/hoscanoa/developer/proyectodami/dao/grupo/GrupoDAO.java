@@ -10,4 +10,6 @@ import java.util.ArrayList;
  */
 public interface GrupoDAO  extends GenericDAO<Grupo, Long>{
       ArrayList<Grupo> listarProfesorModalidadCicloCurso(int profesorId, int modalidadEstudioId, int cicloId, int cursoId, int seccionId);
+
+      void insertar(ArrayList<Grupo> grupos);
 }

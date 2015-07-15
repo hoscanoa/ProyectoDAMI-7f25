@@ -18,12 +18,28 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hoscanoa.developer.proyectodami.beans.CargaDocente;
+import com.hoscanoa.developer.proyectodami.beans.Carrera;
+import com.hoscanoa.developer.proyectodami.beans.CarreraCurso;
 import com.hoscanoa.developer.proyectodami.beans.Ciclo;
+import com.hoscanoa.developer.proyectodami.beans.Curso;
+import com.hoscanoa.developer.proyectodami.beans.CursoEvaluacion;
+import com.hoscanoa.developer.proyectodami.beans.Evaluacion;
+import com.hoscanoa.developer.proyectodami.beans.Grupo;
 import com.hoscanoa.developer.proyectodami.beans.ModalidadEstudio;
 import com.hoscanoa.developer.proyectodami.beans.Profesor;
+import com.hoscanoa.developer.proyectodami.beans.Seccion;
 import com.hoscanoa.developer.proyectodami.dao.Factory;
+import com.hoscanoa.developer.proyectodami.dao.carerra.CarerraDAO;
+import com.hoscanoa.developer.proyectodami.dao.cargaDocente.CargaDocenteDAO;
+import com.hoscanoa.developer.proyectodami.dao.carreraCurso.CarreraCursoDAO;
 import com.hoscanoa.developer.proyectodami.dao.ciclo.CicloDAO;
+import com.hoscanoa.developer.proyectodami.dao.curso.CursoDAO;
+import com.hoscanoa.developer.proyectodami.dao.cursoEvaluacion.CursoEvaluacionDAO;
+import com.hoscanoa.developer.proyectodami.dao.evaluacion.EvaluacionDAO;
+import com.hoscanoa.developer.proyectodami.dao.grupo.GrupoDAO;
 import com.hoscanoa.developer.proyectodami.dao.modalidadEstudio.ModalidadEstudioDAO;
+import com.hoscanoa.developer.proyectodami.dao.seccion.SeccionDAO;
 import com.hoscanoa.developer.proyectodami.servicio.Servicio;
 
 import java.util.ArrayList;
@@ -39,6 +55,18 @@ public class ImportarFragment extends Fragment implements View.OnClickListener {
 
     ProgressDialog progressDialog;
 
+    ArrayList<Object> objetos = new ArrayList<Object>();
+
+    ArrayList<Grupo> grupos = new  ArrayList<Grupo>();
+    ArrayList<Seccion> secciones = new  ArrayList<Seccion>();
+    ArrayList<Curso> cursos = new  ArrayList<Curso>();
+    ArrayList<Evaluacion> evaluaciones = new  ArrayList<Evaluacion>();
+    ArrayList<CursoEvaluacion> cursoEvaluaciones = new  ArrayList<CursoEvaluacion>();
+    ArrayList<CargaDocente> cargaDocentes = new  ArrayList<CargaDocente>();
+    ArrayList<Carrera> carreras = new  ArrayList<Carrera>();
+    ArrayList<CarreraCurso> carreraCursos = new  ArrayList<CarreraCurso>();
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,6 +81,7 @@ public class ImportarFragment extends Fragment implements View.OnClickListener {
 
         spnModalidad=(Spinner)rootView.findViewById(R.id.spnModalidad);
         llenarModalidades();
+
         spnCiclo=(Spinner)rootView.findViewById(R.id.spnCicloImportar);
         llenarCiclos();
 
@@ -89,7 +118,7 @@ public class ImportarFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        progressDialog = new ProgressDialog(getActivity());
+        progressDialog = new ProgressDialog(context);
         new Importar().execute();
     }
 
@@ -97,15 +126,58 @@ public class ImportarFragment extends Fragment implements View.OnClickListener {
     private class Importar extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... params) {
-            int k=0;
+
+            Servicio servicio = new Servicio();
+            ModalidadEstudio modalidadEstudio = (ModalidadEstudio) spnModalidad.getSelectedItem();
+            Ciclo ciclo = (Ciclo) spnCiclo.getSelectedItem();
+            objetos=servicio.Importar(profesor.getProfesorId(),modalidadEstudio.getModalidadEstudioId(), ciclo.getCicloId());
+
+            if(objetos!=null)
+            {
+                Factory factory = Factory.getFactory(Factory.TIPO_SQLITE);
+                CursoDAO cursoDAO = factory.getCursoDAO(context);
+                SeccionDAO seccionDAO = factory.getSeccionDAO(context);
+                GrupoDAO grupoDAO = factory.getGrupoDAO(context);
+                CargaDocenteDAO cargaDocenteDAO = factory.getCargaDocenteDAO(context);
+                EvaluacionDAO evaluacionDAO = factory.getEvaluacionDAO(context);
+                CursoEvaluacionDAO cursoEvaluacionDAO = factory.getCursoEvaluacionDAO(context);
+                CarerraDAO carerraDAO = factory.getCarerraDAO(context);
+                CarreraCursoDAO carreraCursoDAO=factory.getCarreraCursoDAO(context);
+
+                grupos = (ArrayList<Grupo>) objetos.get(0);
+                secciones = (ArrayList<Seccion>)objetos.get(1);
+                cursos = (ArrayList<Curso>)objetos.get(2);
+                evaluaciones =(ArrayList<Evaluacion>)objetos.get(3);
+                cargaDocentes =(ArrayList<CargaDocente>)objetos.get(4);
+                cursoEvaluaciones = (ArrayList<CursoEvaluacion>)objetos.get(5);
+                carreras= (ArrayList<Carrera>)objetos.get(6);
+                carreraCursos= (ArrayList<CarreraCurso>)objetos.get(7);
+
+                grupoDAO.insertar(grupos);
+                seccionDAO.insertar(secciones);
+                cursoDAO.insertar(cursos);
+                evaluacionDAO.insertar(evaluaciones);
+                cargaDocenteDAO.insertar(cargaDocentes);
+                cursoEvaluacionDAO.insertar(cursoEvaluaciones);
+                carerraDAO.insertar(carreras);
+                carreraCursoDAO.insertar(carreraCursos);
+            }
 
             return null;
         }
 
 
         protected void onPostExecute(Void unused) {
-            Toast.makeText(getActivity(),"Importación correcta",Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
+            if(objetos!=null)
+            {
+                Toast.makeText(context,"Importación correcta",Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                Toast.makeText(context,"Importación incorrecta",Toast.LENGTH_LONG).show();
+            }
+
         }
     }
 

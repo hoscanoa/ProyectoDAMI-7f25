@@ -1,26 +1,25 @@
-package com.hoscanoa.developer.proyectodami.dao.cargaDocente;
+package com.hoscanoa.developer.proyectodami.dao.carreraCurso;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.hoscanoa.developer.proyectodami.beans.CargaDocente;
-import com.hoscanoa.developer.proyectodami.beans.Ciclo;
+import com.hoscanoa.developer.proyectodami.beans.Carrera;
+import com.hoscanoa.developer.proyectodami.beans.CarreraCurso;
 import com.hoscanoa.developer.proyectodami.conexion.DbHelper;
 
 import java.util.ArrayList;
 
 /**
- * Created by Hernan on 19/05/2015.
+ * Created by Hernan on 15/07/2015.
  */
-public class SQLiteCargaDocenteDAO implements CargaDocenteDAO {
+public class SQLiteCarreraCursoDAO implements CarreraCursoDAO {
     private Context context;
 
-    public SQLiteCargaDocenteDAO(Context context)
-    {
+    public SQLiteCarreraCursoDAO(Context context) {
         this.context=context;
     }
-
 
     @Override
     public ArrayList<CargaDocente> listar() {
@@ -48,20 +47,18 @@ public class SQLiteCargaDocenteDAO implements CargaDocenteDAO {
     }
 
     @Override
-    public void insertar(ArrayList<CargaDocente> cargaDocentes) {
+    public void insertar(ArrayList<CarreraCurso> carreraCursos) {
         try {
             DbHelper helper = new DbHelper(context);
             SQLiteDatabase database = helper.getWritableDatabase();
 
-            for(CargaDocente c: cargaDocentes){
+            for(CarreraCurso c : carreraCursos){
                 ContentValues values= new ContentValues();
-                values.put("cargaDocenteId",c.getCargaDocenteId());
+                values.put("carreraCursoId",c.getCarreraCursoId());
+                values.put("carreraId",c.getCarreraId());
                 values.put("cursoId",c.getCursoId());
-                values.put("profesorId",c.getProfesorId());
-                values.put("cicloId",c.getCicloId());
-                values.put("seccionId",c.getSeccionId());
-                values.put("grupoId",c.getGrupoId());
-                database.insert("CARGA_DOCENTE",null,values);
+                values.put("creditos",c.getCreditos());
+                database.insert("CARRERAS_CURSOS",null,values);
             }
         }
         catch (Exception e){

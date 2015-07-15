@@ -17,4 +17,6 @@ public interface SeccionDAO extends GenericDAO<Seccion, Long>
     public ArrayList<Integer> listarGruposxCiclo_Profesor_Curso(int idCiclo, int idProfesor, int idCurso, int idSeccion);
 
     ArrayList<Seccion> listarProfesorModalidadCicloCurso(int profesorId, int modalidadEstudioId, int cicloId, int cursoId);
+
+    void insertar(ArrayList<Seccion> secciones);
 }

@@ -1,10 +1,12 @@
 package com.hoscanoa.developer.proyectodami.dao.seccion;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.hoscanoa.developer.proyectodami.beans.Curso;
+import com.hoscanoa.developer.proyectodami.beans.Grupo;
 import com.hoscanoa.developer.proyectodami.beans.Seccion;
 import com.hoscanoa.developer.proyectodami.conexion.DbHelper;
 
@@ -115,6 +117,24 @@ public class SQLiteSeccionDAO implements SeccionDAO {
             e.printStackTrace();
         }
         return lista;
+    }
+
+    @Override
+    public void insertar(ArrayList<Seccion> secciones) {
+        try {
+            DbHelper helper = new DbHelper(context);
+            SQLiteDatabase database = helper.getWritableDatabase();
+
+            for(Seccion s: secciones){
+                ContentValues values= new ContentValues();
+                values.put("seccionId",s.getSeccionId());
+                values.put("descripcion",s.getDescripcion());
+                database.insert("SECCIONES",null,values);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

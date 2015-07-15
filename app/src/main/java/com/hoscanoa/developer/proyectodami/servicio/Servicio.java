@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.hoscanoa.developer.proyectodami.beans.Alumno;
 import com.hoscanoa.developer.proyectodami.beans.CargaDocente;
+import com.hoscanoa.developer.proyectodami.beans.Carrera;
+import com.hoscanoa.developer.proyectodami.beans.CarreraCurso;
 import com.hoscanoa.developer.proyectodami.beans.Ciclo;
 import com.hoscanoa.developer.proyectodami.beans.Curso;
 import com.hoscanoa.developer.proyectodami.beans.CursoEvaluacion;
@@ -16,6 +18,7 @@ import com.hoscanoa.developer.proyectodami.beans.Seccion;
 import com.hoscanoa.developer.proyectodami.conexion.DbHelper;
 import com.hoscanoa.developer.proyectodami.dao.Factory;
 import com.hoscanoa.developer.proyectodami.dao.alumno.AlumnoDAO;
+import com.hoscanoa.developer.proyectodami.dao.cargaDocente.CargaDocenteDAO;
 import com.hoscanoa.developer.proyectodami.dao.ciclo.CicloDAO;
 import com.hoscanoa.developer.proyectodami.dao.curso.CursoDAO;
 import com.hoscanoa.developer.proyectodami.dao.evaluacion.EvaluacionDAO;
@@ -35,6 +38,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,16 +152,18 @@ public class Servicio {
     }
 
 
-    public void Importar(int profesorId, int modalidadEstudioId, int cicloId)
+    public ArrayList<Object> Importar(int profesorId, int modalidadEstudioId, int cicloId)
     {
         ArrayList<Object> objetos = new ArrayList<Object>();
 
         ArrayList<Grupo> grupos = new  ArrayList<Grupo>();
-        ArrayList<Seccion> seccion = new  ArrayList<Seccion>();
+        ArrayList<Seccion> secciones = new  ArrayList<Seccion>();
         ArrayList<Curso> cursos = new  ArrayList<Curso>();
         ArrayList<Evaluacion> evaluaciones = new  ArrayList<Evaluacion>();
         ArrayList<CursoEvaluacion> cursoEvaluaciones = new  ArrayList<CursoEvaluacion>();
-        ArrayList<CargaDocente> cargaDocente = new  ArrayList<CargaDocente>();
+        ArrayList<CargaDocente> cargaDocentes = new  ArrayList<CargaDocente>();
+        ArrayList<Carrera> carreras = new  ArrayList<Carrera>();
+        ArrayList<CarreraCurso> carreraCursos = new  ArrayList<CarreraCurso>();
 
         try {
             String posturl = "http://proyectodami-hoscanoa.rhcloud.com/importacion/";
@@ -168,6 +174,7 @@ public class Servicio {
             p.add(new BasicNameValuePair("profesorId", String.valueOf(profesorId)));
             p.add(new BasicNameValuePair("modalidadEstudioId", String.valueOf(modalidadEstudioId)));
             p.add(new BasicNameValuePair("cicloId", String.valueOf(cicloId)));
+
 
             httppost.setEntity(new UrlEncodedFormEntity(p));
             HttpResponse resp = httpclient.execute(httppost);
@@ -181,27 +188,91 @@ public class Servicio {
 
             if(mensaje.equals("exito"))
             {
+                //GRUPOS
                 JSONArray arreglo = respuestaJSON.getJSONArray("Grupos");
                 for(int i=0;i<arreglo.length();i++)
                 {
                     JSONObject g = arreglo.getJSONObject(i);
-                    Grupo grupo = new ModalidadEstudio(m.getInt("modalidadEstudioId"),m.getString("descripcion"),m.getString("abreviatura"));
-                    modalidadEstudios.add(modalidadEstudio);
+                    Grupo grupo = new Grupo(g.getInt("grupoId"),g.getString("descripcion"));
+                    grupos.add(grupo);
                 }
-                objetos.add(modalidadEstudios);
 
-                arreglo = respuestaJSON.getJSONArray("ciclos");
+                //SECCIONES
+                arreglo = respuestaJSON.getJSONArray("Secciones");
+                for(int i=0;i<arreglo.length();i++)
+                {
+                    JSONObject s = arreglo.getJSONObject(i);
+                    Seccion seccion = new Seccion(s.getInt("seccionId"),s.getString("descripcion"));
+                    secciones.add(seccion);
+                }
+
+
+                //EVALUACIONES
+                arreglo = respuestaJSON.getJSONArray("Evaluaciones");
+                for(int i=0;i<arreglo.length();i++)
+                {
+                    JSONObject e = arreglo.getJSONObject(i);
+                    Evaluacion evaluacion = new Evaluacion(e.getInt("evaluacionId"),e.getString("descripcion"));
+                    evaluaciones.add(evaluacion);
+                }
+
+                //CARRERAS
+                arreglo = respuestaJSON.getJSONArray("Carreras");
+                for(int i=0;i<arreglo.length();i++)
+                {
+                    JSONObject ca = arreglo.getJSONObject(i);
+                    Carrera carrera = new Carrera(ca.getInt("carreraId"),ca.getString("descripcion"),ca.getInt("modalidadEstudioId"));
+                    carreras.add(carrera);
+                }
+
+                //CARRERASCURSOS
+                arreglo = respuestaJSON.getJSONArray("CarrerasCursos");
+                for(int i=0;i<arreglo.length();i++)
+                {
+                    JSONObject cc = arreglo.getJSONObject(i);
+                    CarreraCurso carreraCurso = new CarreraCurso(cc.getInt("carreraCursoId"),cc.getInt("carreraId"),cc.getInt("cursoId"),cc.getInt("creditos"));
+                    carreraCursos.add(carreraCurso);
+                }
+
+
+                //CARGADOCENTE
+                arreglo = respuestaJSON.getJSONArray("CargaDocente");
+                for(int i=0;i<arreglo.length();i++)
+                {
+                    JSONObject cd = arreglo.getJSONObject(i);
+                    CargaDocente cargaDocente = new CargaDocente(cd.getInt("cargaDocenteId"),cd.getInt("cursoId"),cd.getInt("profesorId"),cd.getInt("cicloId"),cd.getInt("seccionId"),cd.getInt("grupoId"));
+                    cargaDocentes.add(cargaDocente);
+                }
+
+
+
+                //CURSOS
+                arreglo = respuestaJSON.getJSONArray("Cursos");
                 for(int i=0;i<arreglo.length();i++)
                 {
                     JSONObject c = arreglo.getJSONObject(i);
-                    Ciclo ciclo = new Ciclo(c.getInt("cicloId"),c.getString("descripcion"));
-                    ciclos.add(ciclo);
+                    Curso curso = new Curso(c.getInt("cursoId"),c.getString("codigo"),c.getString("descripcion"));
+                    cursos.add(curso);
+
+                    JSONArray arreglo2 =c.getJSONArray("CursoEvaluaciones");
+                    for(int j=0;j<arreglo2.length();j++) {
+                        JSONObject ce = arreglo2.getJSONObject(j);
+                        CursoEvaluacion cursoEvaluacion = new CursoEvaluacion(ce.getInt("cursoEvaluacionId"), ce.getInt("cursoId"), ce.getInt("evaluacionId"), ce.getInt("numero"), ce.getInt("porcentaje"));
+                        cursoEvaluaciones.add(cursoEvaluacion);
+                    }
                 }
-                objetos.add(ciclos);
+                objetos.add(grupos);
+                objetos.add(secciones);
+                objetos.add(cursos);
+                objetos.add(evaluaciones);
+                objetos.add(cargaDocentes);
+                objetos.add(cursoEvaluaciones);
+                objetos.add(carreras);
+                objetos.add(carreraCursos);
             }
             else
             {
-                objetos.add(null);
+                objetos=null;
             }
 
         } catch (Exception e) {

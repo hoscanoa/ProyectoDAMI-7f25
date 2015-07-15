@@ -15,6 +15,16 @@ public class CursoEvaluacion implements Serializable {
         return ""+numero;
     }
 
+    public CursoEvaluacion(){}
+
+    public CursoEvaluacion(int cursoEvaluacionId, int cursoId, int evaluacionId, int numero, int porcentaje) {
+        this.cursoEvaluacionId = cursoEvaluacionId;
+        this.cursoId = cursoId;
+        this.evaluacionId = evaluacionId;
+        this.numero = numero;
+        this.porcentaje = porcentaje;
+    }
+
     public int getCursoEvaluacionId() {
         return cursoEvaluacionId;
     }

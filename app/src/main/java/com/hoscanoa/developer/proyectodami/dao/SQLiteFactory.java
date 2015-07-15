@@ -14,6 +14,8 @@ import com.hoscanoa.developer.proyectodami.dao.carerra.CarerraDAO;
 import com.hoscanoa.developer.proyectodami.dao.carerra.SQLiteCarerraDAO;
 import com.hoscanoa.developer.proyectodami.dao.cargaDocente.CargaDocenteDAO;
 import com.hoscanoa.developer.proyectodami.dao.cargaDocente.SQLiteCargaDocenteDAO;
+import com.hoscanoa.developer.proyectodami.dao.carreraCurso.CarreraCursoDAO;
+import com.hoscanoa.developer.proyectodami.dao.carreraCurso.SQLiteCarreraCursoDAO;
 import com.hoscanoa.developer.proyectodami.dao.ciclo.CicloDAO;
 import com.hoscanoa.developer.proyectodami.dao.ciclo.SQLiteCicloDAO;
 import com.hoscanoa.developer.proyectodami.dao.curso.CursoDAO;
@@ -153,5 +155,10 @@ public class SQLiteFactory extends Factory {
     @Override
     public HistorialDAO getHistorialDAO(Context context) {
         return new SQLiteHistorialDAO(context);
+    }
+
+    @Override
+    public CarreraCursoDAO getCarreraCursoDAO(Context context) {
+        return new SQLiteCarreraCursoDAO(context);
     }
 }

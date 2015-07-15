@@ -1,10 +1,12 @@
 package com.hoscanoa.developer.proyectodami.dao.cursoEvaluacion;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.hoscanoa.developer.proyectodami.beans.CursoEvaluacion;
+import com.hoscanoa.developer.proyectodami.beans.Seccion;
 import com.hoscanoa.developer.proyectodami.conexion.DbHelper;
 
 import java.util.ArrayList;
@@ -73,5 +75,26 @@ public class SQLiteCursoEvaluacionDAO implements CursoEvaluacionDAO {
             e.printStackTrace();
         }
         return lista;
+    }
+
+    @Override
+    public void insertar(ArrayList<CursoEvaluacion> cursoEvaluaciones) {
+        try {
+            DbHelper helper = new DbHelper(context);
+            SQLiteDatabase database = helper.getWritableDatabase();
+
+            for(CursoEvaluacion ce : cursoEvaluaciones){
+                ContentValues values= new ContentValues();
+                values.put("cursoEvaluacionId",ce.getCursoEvaluacionId());
+                values.put("cursoId",ce.getCursoId());
+                values.put("evaluacionId",ce.getEvaluacionId());
+                values.put("numero", ce.getNumero());
+                values.put("porcentaje", ce.getPorcentaje());
+                database.insert("CURSOS_EVALUACIONES",null,values);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

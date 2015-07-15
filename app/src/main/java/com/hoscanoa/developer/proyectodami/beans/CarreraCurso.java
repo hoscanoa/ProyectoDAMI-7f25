@@ -9,6 +9,15 @@ public class CarreraCurso implements Serializable {
      private int cursoId;
      private int creditos;
 
+    public CarreraCurso(){}
+
+    public CarreraCurso(int carreraCursoId, int carreraId, int cursoId, int creditos) {
+        this.carreraCursoId = carreraCursoId;
+        this.carreraId = carreraId;
+        this.cursoId = cursoId;
+        this.creditos = creditos;
+    }
+
     public int getCarreraCursoId() {
         return carreraCursoId;
     }

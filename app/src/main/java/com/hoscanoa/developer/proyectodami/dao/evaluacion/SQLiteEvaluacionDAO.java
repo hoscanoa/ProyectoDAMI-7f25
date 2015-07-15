@@ -1,9 +1,11 @@
 package com.hoscanoa.developer.proyectodami.dao.evaluacion;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.hoscanoa.developer.proyectodami.beans.Curso;
 import com.hoscanoa.developer.proyectodami.beans.Evaluacion;
 import com.hoscanoa.developer.proyectodami.conexion.DbHelper;
 
@@ -89,6 +91,24 @@ public class SQLiteEvaluacionDAO implements EvaluacionDAO {
             e.printStackTrace();
         }
         return lista;
+    }
+
+    @Override
+    public void insertar(ArrayList<Evaluacion> evaluaciones) {
+        try {
+            DbHelper helper = new DbHelper(context);
+            SQLiteDatabase database = helper.getWritableDatabase();
+
+            for(Evaluacion e:evaluaciones){
+                ContentValues values= new ContentValues();
+                values.put("evaluacionId",e.getEvaluacionId());
+                values.put("descripcion",e.getDescripcion());
+                database.insert("EVALUACIONES",null,values);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

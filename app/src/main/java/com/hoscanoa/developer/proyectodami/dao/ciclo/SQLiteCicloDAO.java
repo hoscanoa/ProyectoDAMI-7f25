@@ -77,13 +77,9 @@ public class SQLiteCicloDAO implements CicloDAO {
                 values.put("descripcion",ciclo.getDescripcion());
                 database.insert("CICLOS",null,values);
             }
-
-
-
         }
         catch (Exception e){
             e.printStackTrace();
         }
-        //return lista;
     }
 }

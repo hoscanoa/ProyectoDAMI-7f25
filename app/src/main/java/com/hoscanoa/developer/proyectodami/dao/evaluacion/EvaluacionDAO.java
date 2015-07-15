@@ -13,4 +13,6 @@ public interface EvaluacionDAO extends GenericDAO<Evaluacion, Long>
     ArrayList<Evaluacion> listarXCurso(int idCurso);
 
     ArrayList<Evaluacion> listarCurso(int cursoId);
+
+    void insertar(ArrayList<Evaluacion> evaluaciones);
 }
