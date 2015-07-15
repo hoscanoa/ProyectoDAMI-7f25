@@ -1,5 +1,6 @@
 package com.hoscanoa.developer.proyectodami.dao.ciclo;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -69,7 +70,16 @@ public class SQLiteCicloDAO implements CicloDAO {
         try {
             DbHelper helper = new DbHelper(context);
             SQLiteDatabase database = helper.getWritableDatabase();
-            //database.insert("Ciclos",null,);
+
+            for(Ciclo ciclo:ciclos){
+                ContentValues values= new ContentValues();
+                values.put("cicloId",ciclo.getCicloId());
+                values.put("descripcion",ciclo.getDescripcion());
+                database.insert("CICLOS",null,values);
+            }
+
+
+
         }
         catch (Exception e){
             e.printStackTrace();
