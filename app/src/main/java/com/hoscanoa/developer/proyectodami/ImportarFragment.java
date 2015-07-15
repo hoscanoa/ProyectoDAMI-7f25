@@ -104,7 +104,7 @@ public class ImportarFragment extends Fragment implements View.OnClickListener {
 
 
         protected void onPostExecute(Void unused) {
-            Toast.makeText(getActivity(),"Importación correcta",Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),"ImportaciÃ³n correcta",Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
         }
     }

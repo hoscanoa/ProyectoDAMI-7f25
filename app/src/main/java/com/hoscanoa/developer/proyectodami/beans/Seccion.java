@@ -12,6 +12,13 @@ public class Seccion implements Serializable {
         return descripcion;
     }
 
+    public Seccion(){}
+
+    public Seccion(int seccionId, String descripcion) {
+        this.seccionId = seccionId;
+        this.descripcion = descripcion;
+    }
+
     public int getSeccionId() {
         return seccionId;
     }

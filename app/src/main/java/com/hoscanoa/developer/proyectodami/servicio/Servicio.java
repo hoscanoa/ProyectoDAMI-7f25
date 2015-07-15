@@ -4,8 +4,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.hoscanoa.developer.proyectodami.beans.Alumno;
+import com.hoscanoa.developer.proyectodami.beans.CargaDocente;
 import com.hoscanoa.developer.proyectodami.beans.Ciclo;
 import com.hoscanoa.developer.proyectodami.beans.Curso;
+import com.hoscanoa.developer.proyectodami.beans.CursoEvaluacion;
 import com.hoscanoa.developer.proyectodami.beans.Evaluacion;
 import com.hoscanoa.developer.proyectodami.beans.Grupo;
 import com.hoscanoa.developer.proyectodami.beans.ModalidadEstudio;
@@ -142,10 +144,72 @@ public class Servicio {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         return objetos;
     }
+
+
+    public void Importar(int profesorId, int modalidadEstudioId, int cicloId)
+    {
+        ArrayList<Object> objetos = new ArrayList<Object>();
+
+        ArrayList<Grupo> grupos = new  ArrayList<Grupo>();
+        ArrayList<Seccion> seccion = new  ArrayList<Seccion>();
+        ArrayList<Curso> cursos = new  ArrayList<Curso>();
+        ArrayList<Evaluacion> evaluaciones = new  ArrayList<Evaluacion>();
+        ArrayList<CursoEvaluacion> cursoEvaluaciones = new  ArrayList<CursoEvaluacion>();
+        ArrayList<CargaDocente> cargaDocente = new  ArrayList<CargaDocente>();
+
+        try {
+            String posturl = "http://proyectodami-hoscanoa.rhcloud.com/importacion/";
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(posturl);
+
+            List<NameValuePair> p = new ArrayList<>();
+            p.add(new BasicNameValuePair("profesorId", String.valueOf(profesorId)));
+            p.add(new BasicNameValuePair("modalidadEstudioId", String.valueOf(modalidadEstudioId)));
+            p.add(new BasicNameValuePair("cicloId", String.valueOf(cicloId)));
+
+            httppost.setEntity(new UrlEncodedFormEntity(p));
+            HttpResponse resp = httpclient.execute(httppost);
+            HttpEntity ent = resp.getEntity();
+
+
+            String respuestaStr = EntityUtils.toString(resp.getEntity());
+            JSONObject respuestaJSON = new JSONObject(respuestaStr);
+
+            String mensaje = respuestaJSON.getString("mensaje");
+
+            if(mensaje.equals("exito"))
+            {
+                JSONArray arreglo = respuestaJSON.getJSONArray("Grupos");
+                for(int i=0;i<arreglo.length();i++)
+                {
+                    JSONObject g = arreglo.getJSONObject(i);
+                    Grupo grupo = new ModalidadEstudio(m.getInt("modalidadEstudioId"),m.getString("descripcion"),m.getString("abreviatura"));
+                    modalidadEstudios.add(modalidadEstudio);
+                }
+                objetos.add(modalidadEstudios);
+
+                arreglo = respuestaJSON.getJSONArray("ciclos");
+                for(int i=0;i<arreglo.length();i++)
+                {
+                    JSONObject c = arreglo.getJSONObject(i);
+                    Ciclo ciclo = new Ciclo(c.getInt("cicloId"),c.getString("descripcion"));
+                    ciclos.add(ciclo);
+                }
+                objetos.add(ciclos);
+            }
+            else
+            {
+                objetos.add(null);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return objetos;
+    }
+
 
 
     public boolean verificarDatos(Context context){

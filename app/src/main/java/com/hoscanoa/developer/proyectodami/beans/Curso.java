@@ -12,6 +12,14 @@ public class Curso implements Serializable {
         return codigo+" - "+descripcion.toUpperCase();
     }
 
+    public Curso(){}
+
+    public Curso(int cursoId, String codigo, String descripcion) {
+        this.cursoId = cursoId;
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+    }
+
     public int getCursoId() {
         return cursoId;
     }

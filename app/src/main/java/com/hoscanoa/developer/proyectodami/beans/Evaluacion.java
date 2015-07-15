@@ -11,6 +11,13 @@ public class Evaluacion implements Serializable {
         return descripcion;
     }
 
+    public Evaluacion(){}
+
+    public Evaluacion(int evaluacionId, String descripcion) {
+        this.evaluacionId = evaluacionId;
+        this.descripcion = descripcion;
+    }
+
     public int getEvaluacionId() {
         return evaluacionId;
     }

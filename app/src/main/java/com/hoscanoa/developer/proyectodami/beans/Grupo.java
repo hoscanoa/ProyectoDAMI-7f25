@@ -13,6 +13,13 @@ public class Grupo implements Serializable {
         return descripcion;
     }
 
+    public Grupo(){}
+
+    public Grupo(int grupoId, String descripcion) {
+        this.grupoId = grupoId;
+        this.descripcion = descripcion;
+    }
+
     public int getGrupoId() {
         return grupoId;
     }

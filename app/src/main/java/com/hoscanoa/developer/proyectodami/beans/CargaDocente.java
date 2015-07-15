@@ -13,6 +13,17 @@ public class CargaDocente implements Serializable {
     private int seccionId;
     private int grupoId;
 
+    public CargaDocente(){}
+
+    public CargaDocente(int cargaDocenteId, int cursoId, int profesorId, int cicloId, int seccionId, int grupoId) {
+        this.cargaDocenteId = cargaDocenteId;
+        this.cursoId = cursoId;
+        this.profesorId = profesorId;
+        this.cicloId = cicloId;
+        this.seccionId = seccionId;
+        this.grupoId = grupoId;
+    }
+
     public int getCargaDocenteId() {
         return cargaDocenteId;
     }
