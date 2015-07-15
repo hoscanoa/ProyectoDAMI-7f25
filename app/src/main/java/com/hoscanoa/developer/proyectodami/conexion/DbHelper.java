@@ -239,7 +239,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_HISTORIAL = "CREATE TABLE HISTORIAL (\n" +
             "historialId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
-            "profesorId INTEGER NOT NULL REFERENCES PROFESORES(profesorId),\n" +
+            "profesorId INTEGER NOT NULL REFERENCES PROFESORES(profesorId)\n" +
             ");";
 
 
