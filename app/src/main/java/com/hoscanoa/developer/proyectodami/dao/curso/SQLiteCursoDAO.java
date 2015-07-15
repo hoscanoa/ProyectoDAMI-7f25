@@ -46,6 +46,14 @@ public class SQLiteCursoDAO implements CursoDAO {
         return lista;
     }
 
+    //CARRERAS
+    //CURSOS
+    //CARRERAS_CURSOS
+    //GRUPOS
+    //SECCIONES
+    //CARGA_DOCENTE
+
+
     @Override
     public ArrayList<Curso> listarProfesorModalidadCiclo(int profesorId, int modalidadEstudioId, int cicloId) {
         ArrayList<Curso> lista = new ArrayList<>();

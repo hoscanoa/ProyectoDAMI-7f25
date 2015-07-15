@@ -123,9 +123,9 @@ public class DbHelper extends SQLiteOpenHelper {
             "  nombres VARCHAR(20) NOT NULL,\n" +
             "  apellidoPaterno VARCHAR(20) NOT NULL,\n" +
             "  apellidoMaterno VARCHAR(20) NOT NULL,\n" +
-            "  email VARCHAR(40) NOT NULL UNIQUE,\n" +
-            "  username VARCHAR(15) NOT NULL UNIQUE,\n" +
-            "  password VARCHAR(15) NOT NULL\n" +
+            "  email VARCHAR(40),\n" +
+            "  username VARCHAR(15),\n" +
+            "  password VARCHAR(15)\n" +
             ");";
 
     private static final String CREATE_TABLE_CARRERAS = "CREATE TABLE CARRERAS (\n" +
