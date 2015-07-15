@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Calificaciones Cibertec</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="strUsuario">Usuario</string>
+    <string name="strPassword">Password</string>
+    <string name="strEntrar">Entrar</string>
+    <string name="title_activity_principal">Opciones</string>
+
+    <string name="title_activity_opciones">Opciones</string>
+    <string name="title_activity_importar">Importar Notas</string>
+    <string name="title_activity_exportar">Exportar Notas</string>
+    <string name="title_activity_registrar_notas">Registrar Notas</string>
+
+    <string name="strProfesorImportar">Docente</string>
+    <string name="strModalidadImportar">Modalidad de Estudio</string>
+    <string name="strCicloImportar">Ciclo Académico</string>
+    <string name="strImportarImportar">Importar</string>
+
+    <string name="strModalidad">Modelidad de Estudio : </string>
+    <string name="strPreIngreso">Preingreso de Notas</string>
+    <string name="strIngresoDescripcion">Permite el preingreso de las notas de los alumnos</string>
+    <string name="strCiclo">Ciclo Académico : </string>
+    <string name="strAsignatura">Asignatura</string>
+    <string name="strSeccion">Sección</string>
+    <string name="strGrupo">Grupo</string>
+    <string name="strTipo">Tipo de Prueba</string>
+    <string name="strNumero">Nro. de Prueba</string>
+
+    <string name="title_section1">Importar Notas</string>
+    <string name="title_section2">Registrar Notas</string>
+    <string name="title_section3">Exportar Notas</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example"></string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_listado">ListadoActivity</string>
+
+</resources>

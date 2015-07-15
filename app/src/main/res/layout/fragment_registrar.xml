@@ -1,0 +1,150 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hoscanoa.developer.proyectodami.RegistrarFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_margin="10sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/title_activity_registrar_notas"
+            android:id="@+id/textView6"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5sp"
+            android:layout_marginTop="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/strIngresoDescripcion"
+                android:id="@+id/textView8" />
+
+            <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginBottom="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/strModalidadImportar"
+                android:id="@+id/textView5" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="70sp"
+                android:id="@+id/spnModalidadRegistrar"
+                android:layout_weight="0.02" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/strCicloImportar"
+                android:id="@+id/textView9" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="70sp"
+                android:id="@+id/spnCicloRegistrar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/strAsignatura"
+                android:id="@+id/textView11" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="70sp"
+                android:id="@+id/spnAsignaturaRegistrar"
+                android:layout_weight="0.08" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/strSeccion"
+                android:id="@+id/textView12" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="70sp"
+                android:id="@+id/spnSeccionRegistrar"
+                android:layout_weight="0.08" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/strGrupo"
+                android:id="@+id/textView13" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="70sp"
+                android:id="@+id/spnGrupoRegistrar"
+                android:layout_weight="0.21" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/strTipo"
+                android:id="@+id/textView7" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="70sp"
+                android:id="@+id/spnTipoPrueba"
+                android:layout_weight="0.21" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/strNumero"
+                android:id="@+id/textView14" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="70sp"
+                android:id="@+id/spnNroPruebaRegistrar"
+                android:layout_weight="0.21" />
+
+            <Button
+                android:layout_width="208dp"
+                android:layout_height="wrap_content"
+                android:text="Mostrar Listado"
+                android:id="@+id/btnMostrar"
+                android:layout_gravity="center_horizontal" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_marginBottom="20sp" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

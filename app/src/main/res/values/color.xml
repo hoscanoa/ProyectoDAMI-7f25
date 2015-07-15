@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ColorPrimary">#004065</color>
+    <color name="ColorPrimaryDark">#002454</color>
+    <color name="filaPar">#E7F6FF</color>
+    <color name="filaImpar">#FFEACD</color>
+</resources>

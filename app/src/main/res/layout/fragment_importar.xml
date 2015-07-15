@@ -1,0 +1,85 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hoscanoa.developer.proyectodami.ImportarFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/title_activity_importar"
+            android:id="@+id/textView6"
+            android:layout_marginBottom="20sp"
+            android:layout_marginTop="20sp"
+            android:layout_gravity="center_horizontal" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginBottom="20sp" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/strProfesorImportar"
+                android:id="@+id/lbl"
+                android:layout_marginTop="20sp"
+                android:layout_margin="5dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:id="@+id/lblProfesorImportar"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_margin="5dp"
+                android:textColor="#ff000000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/strModalidadImportar"
+                android:id="@+id/textView4"
+                android:layout_margin="5dp" />
+
+            <Spinner
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spnModalidad"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/strCicloImportar"
+                android:id="@+id/textView3"
+                android:layout_margin="5dp" />
+
+            <Spinner
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spnCicloImportar"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp" />
+
+            <Button
+                android:layout_width="208dp"
+                android:layout_height="wrap_content"
+                android:text="@string/strImportarImportar"
+                android:id="@+id/btnImportarImportar"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp" />
+    </LinearLayout>
+</FrameLayout>
