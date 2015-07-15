@@ -1,5 +1,6 @@
 package com.hoscanoa.developer.proyectodami.dao.profesor;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -76,7 +77,16 @@ public class SQLiteProfesorDAO implements ProfesorDAO {
 
     @Override
     public void insertarProfesorHistorial(Profesor profesor) {
-
+        try {
+            DbHelper helper = new DbHelper(context);
+            SQLiteDatabase database = helper.getReadableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("profesorId", profesor.getProfesorId());
+            database.insert("Historial",null,values);//historialId/profesorid
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
