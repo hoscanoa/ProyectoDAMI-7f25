@@ -1,5 +1,6 @@
 package com.hoscanoa.developer.proyectodami.dao.modalidadEstudio;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -66,6 +67,21 @@ public class SQLiteModalidadEstudioDAO implements ModalidadEstudioDAO {
 
     @Override
     public void insertarModalidades(ArrayList<ModalidadEstudio> modalidadEstudios) {
+
+        try {
+            DbHelper helper = new DbHelper(context);
+            SQLiteDatabase database = helper.getReadableDatabase();
+            for(ModalidadEstudio m : modalidadEstudios)
+            {
+                ContentValues values = new ContentValues();
+                values.put("modalidadEstudioId", profesor.getProfesorId());
+                database.insert("MODALIDADES_ESTUDIOS",null,values);//historialId/profesorid
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
 
     }
 }
