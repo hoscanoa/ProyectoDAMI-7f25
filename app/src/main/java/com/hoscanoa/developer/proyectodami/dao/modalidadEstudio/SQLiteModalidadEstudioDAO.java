@@ -74,8 +74,10 @@ public class SQLiteModalidadEstudioDAO implements ModalidadEstudioDAO {
             for(ModalidadEstudio m : modalidadEstudios)
             {
                 ContentValues values = new ContentValues();
-                values.put("modalidadEstudioId", profesor.getProfesorId());
-                database.insert("MODALIDADES_ESTUDIOS",null,values);//historialId/profesorid
+                values.put("modalidadEstudioId", m.getModalidadEstudioId());
+                values.put("descripcion", m.getDescripcion());
+                values.put("abreviatura", m.getAbreviatura());
+                database.insert("MODALIDADES_ESTUDIOS",null,values);
             }
         }
         catch (Exception e){

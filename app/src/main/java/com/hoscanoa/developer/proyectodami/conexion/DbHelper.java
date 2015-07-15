@@ -37,6 +37,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_CICLOS);
         db.execSQL(CREATE_TABLE_CARGA_DOCENTE);
         db.execSQL(CREATE_TABLE_MATRICULA);
+            db.execSQL(CREATE_TABLE_HISTORIAL);
 
         db.execSQL(INSERTS_GRUPOS);
         db.execSQL(INSERTS_ESTADOS);
@@ -234,6 +235,11 @@ public class DbHelper extends SQLiteOpenHelper {
             "cicloId INTEGER NOT NULL REFERENCES CICLOS(cicloId),\n" +
             "seccionId INTEGER NOT NULL REFERENCES SECCIONES(seccionId),\n" +
             "estadoId INTEGER NOT NULL REFERENCES ESTADOS(estadoId)\n" +
+            ");";
+
+    private static final String CREATE_TABLE_HISTORIAL = "CREATE TABLE HISTORIAL (\n" +
+            "historialId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\n" +
+            "profesorId INTEGER NOT NULL REFERENCES PROFESORES(profesorId),\n" +
             ");";
 
 
