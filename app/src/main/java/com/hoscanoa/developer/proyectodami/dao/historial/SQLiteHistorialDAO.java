@@ -50,19 +50,18 @@ public class SQLiteHistorialDAO implements HistorialDAO {
     }
 
 
-    public Historial buscarProfesor(int idProfesor) {
+    public Historial buscarProfesor(int profesorId) {
         Historial obj=null;
         try {
             DbHelper helper = new DbHelper(context);
             SQLiteDatabase database = helper.getReadableDatabase();
-            Cursor q = database.rawQuery("SELECT * FROM HISTORIAL WHERE profesorId="+idProfesor,null);
+            Cursor q = database.rawQuery("SELECT * FROM HISTORIAL WHERE profesorId="+profesorId,null);
 
-            while (q.moveToNext())
+            if (q.moveToNext())
             {
                 obj = new Historial();
                 obj.setHistorialId(q.getInt(0));
                 obj.setProfesorId(q.getInt(1));
-
             }
             q.close();
         }
