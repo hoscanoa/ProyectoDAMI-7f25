@@ -96,7 +96,22 @@ public class SQLiteProfesorDAO implements ProfesorDAO {
 
     @Override
     public int insertar(Profesor obj) {
-        return 0;
+        int r=0;
+        try {
+            DbHelper helper = new DbHelper(context);
+            SQLiteDatabase database = helper.getReadableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("profesorId", obj.getProfesorId());
+            values.put("nombres", obj.getNombres());
+            values.put("apellidoPaterno", obj.getApellidoPaterno());
+            values.put("apellidoMaterno", obj.getApellidoMaterno()));
+            r=(int)database.insert("PROFESORES",null,values);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            r=0;
+        }
+        return r;
     }
 
     @Override
