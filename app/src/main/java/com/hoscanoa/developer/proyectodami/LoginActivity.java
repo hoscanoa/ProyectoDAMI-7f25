@@ -146,8 +146,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
 
         protected void onPostExecute(Void unused) {
-            progressDialog.dismiss();
-
             if(profesor!=null)
             {
                 Intent ir = new Intent(getBaseContext(),OpcionesActivity.class);
@@ -158,6 +156,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
             {
                 Toast.makeText(getBaseContext(),"Datos incorrectos",Toast.LENGTH_LONG).show();
             }
+            progressDialog.dismiss();
         }
     }
 }

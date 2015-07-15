@@ -168,7 +168,7 @@ public class ImportarFragment extends Fragment implements View.OnClickListener {
 
 
         protected void onPostExecute(Void unused) {
-            progressDialog.dismiss();
+
             if(objetos!=null)
             {
                 Toast.makeText(context,"Importación correcta",Toast.LENGTH_LONG).show();
@@ -177,7 +177,7 @@ public class ImportarFragment extends Fragment implements View.OnClickListener {
             {
                 Toast.makeText(context,"Importación incorrecta",Toast.LENGTH_LONG).show();
             }
-
+            progressDialog.dismiss();
         }
     }
 
