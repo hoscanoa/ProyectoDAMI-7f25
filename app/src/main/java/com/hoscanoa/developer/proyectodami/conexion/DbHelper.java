@@ -37,9 +37,9 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_CICLOS);
         db.execSQL(CREATE_TABLE_CARGA_DOCENTE);
         db.execSQL(CREATE_TABLE_MATRICULA);
-            db.execSQL(CREATE_TABLE_HISTORIAL);
+        db.execSQL(CREATE_TABLE_HISTORIAL);
 
-        db.execSQL(INSERTS_GRUPOS);
+       /* db.execSQL(INSERTS_GRUPOS);
         db.execSQL(INSERTS_ESTADOS);
         db.execSQL(INSERTS_MODALIDADES_ESTUDIOS);
         db.execSQL(INSERTS_ALUMNOS);
@@ -61,7 +61,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         for (int i = 2014; i <= 2030; i++) {
             db.execSQL("INSERT INTO CICLOS(descripcion) VALUES(?),(?);", new String[]{"" + i + "-I", "" + i + "-II"});
-        }
+        }*/
 
     }
 
