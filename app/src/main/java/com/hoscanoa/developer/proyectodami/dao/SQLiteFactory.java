@@ -28,6 +28,8 @@ import com.hoscanoa.developer.proyectodami.dao.evaluacion.EvaluacionDAO;
 import com.hoscanoa.developer.proyectodami.dao.evaluacion.SQLiteEvaluacionDAO;
 import com.hoscanoa.developer.proyectodami.dao.grupo.GrupoDAO;
 import com.hoscanoa.developer.proyectodami.dao.grupo.SQLiteGrupoDAO;
+import com.hoscanoa.developer.proyectodami.dao.historial.HistorialDAO;
+import com.hoscanoa.developer.proyectodami.dao.historial.SQLiteHistorialDAO;
 import com.hoscanoa.developer.proyectodami.dao.horario.HorarioDAO;
 import com.hoscanoa.developer.proyectodami.dao.horario.SQLiteHorarioDAO;
 import com.hoscanoa.developer.proyectodami.dao.matricula.MatriculaDAO;
@@ -146,5 +148,10 @@ public class SQLiteFactory extends Factory {
     @Override
     public GrupoDAO getGrupoDAO(Context context) {
         return new SQLiteGrupoDAO(context);
+    }
+
+    @Override
+    public HistorialDAO getHistorialDAO(Context context) {
+        return new SQLiteHistorialDAO(context);
     }
 }

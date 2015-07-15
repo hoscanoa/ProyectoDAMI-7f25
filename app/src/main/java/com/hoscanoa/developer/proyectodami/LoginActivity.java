@@ -117,6 +117,8 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                     modalidadEstudios = (ArrayList<ModalidadEstudio>) (objetos.get(1));
                     ciclos = (ArrayList<Ciclo>) (objetos.get(2));
 
+
+
                     profesorDAO.insertarProfesorHistorial(profesor);
                     modalidadEstudioDAO.insertarModalidades(modalidadEstudios);
                     cicloDAO.insertarCiclos(ciclos);

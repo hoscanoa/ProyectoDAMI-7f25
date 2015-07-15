@@ -15,6 +15,7 @@ import com.hoscanoa.developer.proyectodami.dao.dia.DiaDAO;
 import com.hoscanoa.developer.proyectodami.dao.estado.EstadoDAO;
 import com.hoscanoa.developer.proyectodami.dao.evaluacion.EvaluacionDAO;
 import com.hoscanoa.developer.proyectodami.dao.grupo.GrupoDAO;
+import com.hoscanoa.developer.proyectodami.dao.historial.HistorialDAO;
 import com.hoscanoa.developer.proyectodami.dao.horario.HorarioDAO;
 import com.hoscanoa.developer.proyectodami.dao.matricula.MatriculaDAO;
 import com.hoscanoa.developer.proyectodami.dao.modalidadEstudio.ModalidadEstudioDAO;
@@ -49,6 +50,8 @@ public abstract class Factory {
     public abstract CargaDocenteDAO getCargaDocenteDAO(Context context);
     public abstract MatriculaDAO getMatriculaDAO(Context context);
     public abstract GrupoDAO getGrupoDAO(Context context);
+    public abstract HistorialDAO getHistorialDAO(Context context);
+
 
     public static Factory getFactory(int tipo) {
         switch (tipo) {
