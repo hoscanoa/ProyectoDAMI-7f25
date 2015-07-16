@@ -104,7 +104,10 @@ public class ListadoAlumnosFragment extends Fragment implements View.OnClickList
 
         Factory factory = Factory.getFactory(Factory.TIPO_SQLITE);
         AlumnoDAO alumnoDAO = factory.getAlumnoDAO(context);
-
+        RegistroNotaDAO registroNotaDAO = factory.getRegistroNotaDAO(context);
+        CalificacionDAO calificacionDAO = factory.getCalificacionDAO(context);
+        Matricula matricula;
+        Calificacion calificacion;
         ArrayList<Alumno> lista = alumnoDAO.listado(cicloId, cursoId, seccionId, grupoId);
 
         TableRow row;
@@ -186,12 +189,17 @@ public class ListadoAlumnosFragment extends Fragment implements View.OnClickList
             edtNota.setGravity(Gravity.RIGHT);
             edtNota.setTextColor(Color.parseColor("#000000"));
 
-            edtNota.setFilters(new InputFilter[]{new InputFilterMinMax("0","20")});
+
+
+            edtNota.setFilters(new InputFilter[]{new InputFilterMinMax("0", "20")});
 
             txtcod.setText(a.getCodigo());
             txtnom.setText(a.getApellidoPaterno() + " " + a.getApellidoMaterno() + ", " + a.getNombres());
             txtEstado.setText("MATRÍCULA REGULAR");
             txtEstado.setTextSize(8);
+
+
+
             edtNota.setText(String.valueOf(0));
             row.addView(txtcod);
             row.addView(txtnom);
@@ -209,6 +217,7 @@ public class ListadoAlumnosFragment extends Fragment implements View.OnClickList
     public void onClick(View v) {
         if(v==btnGrabarNotas)
         {
+            progressDialog=ProgressDialog.show(context,"Grabando","Espere por favor",true,false);
             Factory factory = Factory.getFactory(Factory.TIPO_SQLITE);
             RegistroNotaDAO registroNotaDAO = factory.getRegistroNotaDAO(context);
             AlumnoDAO alumnoDAO = factory.getAlumnoDAO(context);
@@ -226,7 +235,8 @@ public class ListadoAlumnosFragment extends Fragment implements View.OnClickList
                 matricula = matriculaDAO.buscar(alumno.getAlumnoId(),cursoId, cicloId, seccionId, grupoId);
                 registroNotaDAO.insertar(new RegistroNota(matricula.getMatriculaId(), evaluacionId, calificacionId));
            }
-            Toast.makeText(context,"Se grabo",Toast.LENGTH_LONG).show();
+            progressDialog.dismiss();
+            Toast.makeText(context,"Se grabo localmente los datos",Toast.LENGTH_LONG).show();
         }
     }
 

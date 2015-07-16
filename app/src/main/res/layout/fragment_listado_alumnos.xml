@@ -17,7 +17,7 @@
             android:layout_height="445dp"
             android:id="@+id/scrollView2"
             android:background="@android:color/white"
-            android:layout_weight="1.11">
+            android:layout_weight="0.67">
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -33,11 +33,10 @@
         </ScrollView>
 
         <Button
-            android:layout_width="235dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Grabar Notas"
-            android:id="@+id/btnGrabarNotas"
-            android:layout_gravity="center_horizontal" />
+            android:id="@+id/btnGrabarNotas" />
     </LinearLayout>
 
 </FrameLayout>
