@@ -93,7 +93,8 @@ public class ListadoAlumnosFragment extends Fragment implements View.OnClickList
         btnGrabarNotas.setOnClickListener(this);
         //Jalamos datos del SW
 
-        progressDialog = new ProgressDialog(getActivity());
+        progressDialog=ProgressDialog.show(context,"Buscando alumnos","Espere por favor",true,false);
+
         tabla = (TableLayout) rootView.findViewById(R.id.tblListado);
         new ImportarAlumnos().execute();
         return rootView;

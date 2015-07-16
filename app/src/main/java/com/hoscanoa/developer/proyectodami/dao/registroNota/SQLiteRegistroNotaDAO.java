@@ -2,6 +2,7 @@ package com.hoscanoa.developer.proyectodami.dao.registroNota;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.hoscanoa.developer.proyectodami.beans.Alumno;
@@ -25,7 +26,27 @@ public class SQLiteRegistroNotaDAO implements RegistroNotaDAO {
 
     @Override
     public ArrayList<RegistroNota> listar() {
-        return null;
+        ArrayList<RegistroNota> registroNotas = new ArrayList<>();
+        try {
+            DbHelper helper = new DbHelper(context);
+            SQLiteDatabase database = helper.getReadableDatabase();
+            Cursor q = database.rawQuery("SELECT * FROM REGISTRO_NOTAS",null);
+            RegistroNota obj;
+            while (q.moveToNext())
+            {
+                obj = new RegistroNota();
+                obj.setRegistroNotaId(q.getInt(0));
+                obj.setMatriculaId(q.getInt(1));
+                obj.setCursoEvaluacionId(q.getInt(2));
+                obj.setCalificacionId(q.getInt(3));
+                registroNotas.add(obj);
+            }
+            q.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return registroNotas;
     }
 
     @Override

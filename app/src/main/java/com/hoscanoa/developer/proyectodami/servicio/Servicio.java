@@ -56,7 +56,7 @@ public class Servicio {
         String mensaje = null;
         Profesor profesor = null;
         try {
-            String posturl = "http://10.0.2.2:8000/logeo/";
+            String posturl = "http://proyectodami-hoscanoa.rhcloud.com/logeo/";
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(posturl);
 
@@ -100,7 +100,7 @@ public class Servicio {
         ArrayList<Ciclo> ciclos = new  ArrayList<Ciclo>();
 
         try {
-            String posturl = "http://10.0.2.2:8000/logeoComplejo/";
+            String posturl = "http://proyectodami-hoscanoa.rhcloud.com/logeoComplejo/";
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(posturl);
 
@@ -174,7 +174,7 @@ public class Servicio {
 
 
         try {
-            String posturl = "http://10.0.2.2:8000/importacion/";
+            String posturl = "http://proyectodami-hoscanoa.rhcloud.com/importacion/";
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(posturl);
 
@@ -319,7 +319,7 @@ public class Servicio {
         ArrayList<Matricula> matriculas = new  ArrayList<Matricula>();
 
         try {
-            String posturl = "http://10.0.2.2:8000/listarAlumnosPorCicloCursoSeccionGrupo/";
+            String posturl = "http://proyectodami-hoscanoa.rhcloud.com/listarAlumnosPorCicloCursoSeccionGrupo/";
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(posturl);
 
@@ -375,15 +375,14 @@ public class Servicio {
         for(RegistroNota rn : registroNotas)
         {
             try {
-                String posturl = "http://10.0.2.2:8000/grabarNotaAlumnoPorCursoEvaluacionNumero/";
+                String posturl = "http://proyectodami-hoscanoa.rhcloud.com/grabarNotaAlumnoPorCursoEvaluacionNumero/";
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpPost httppost = new HttpPost(posturl);
 
                 List<NameValuePair> p = new ArrayList<>();
-                p.add(new BasicNameValuePair("cicloId", String.valueOf(cicloId)));
-                p.add(new BasicNameValuePair("cursoId", String.valueOf(cursoId)));
-                p.add(new BasicNameValuePair("seccionId", String.valueOf(seccionId)));
-                p.add(new BasicNameValuePair("grupoId", String.valueOf(grupoId)));
+                p.add(new BasicNameValuePair("matriculaId", String.valueOf(rn.getMatriculaId())));
+                p.add(new BasicNameValuePair("cursoEvaluacionId", String.valueOf(rn.getCursoEvaluacionId())));
+                p.add(new BasicNameValuePair("calificacionId", String.valueOf(rn.getCalificacionId())));
 
                 httppost.setEntity(new UrlEncodedFormEntity(p));
                 HttpResponse resp = httpclient.execute(httppost);
@@ -393,34 +392,8 @@ public class Servicio {
                 JSONObject respuestaJSON = new JSONObject(respuestaStr);
 
                 String mensaje = respuestaJSON.getString("mensaje");
-
-                if(mensaje.equals("exito")) {
-                    JSONArray arreglo = respuestaJSON.getJSONArray("Alumnos");
-                    for (int i = 0; i < arreglo.length(); i++) {
-                        JSONObject g = arreglo.getJSONObject(i);
-                        Alumno alumno = new Alumno(g.getInt("alumnoId"), g.getString("codigo"),
-                                g.getString("nombres"), g.getString("apellidoPaterno"),
-                                g.getString("apellidoMaterno"), g.getString("email"),
-                                g.getInt("estadoId"));
-                        alumnos.add(alumno);
-                    }
-                    objetos.add(alumnos);
-                    arreglo = respuestaJSON.getJSONArray("Matriculas");
-                    for (int i = 0; i < arreglo.length(); i++) {
-                        JSONObject g = arreglo.getJSONObject(i);
-                        Matricula matricula = new Matricula(g.getInt("matriculaId"), g.getInt("alumnoId"),
-                                g.getInt("cicloId"), g.getInt("cursoId"),
-                                g.getInt("estadoId"), g.getInt("grupoId"),g.getInt("seccionId") );
-                        matriculas.add(matricula);
-                    }
-                    objetos.add(matriculas);
-                }
-                else
-                {
-                    objetos=null;
-                }
+                android.util.Log.i("mensaje", mensaje);
             } catch (Exception e) {
-                objetos=null;
                 e.printStackTrace();
             }
         }
@@ -462,7 +435,7 @@ public class Servicio {
         String areglo="no hay nada   - ";
         ArrayList<ModalidadEstudio>  modalidadEstudios= new ArrayList<ModalidadEstudio>();
         try {
-            String posturl = "http://10.0.2.2:8000/listarModalidadesEstudio/";
+            String posturl = "http://proyectodami-hoscanoa.rhcloud.com/listarModalidadesEstudio/";
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(posturl);
             HttpResponse resp = httpclient.execute(httppost);
@@ -507,7 +480,7 @@ public class Servicio {
     public String  listarCiclos(Context context){
         String areglo="no hay nada   - ";
         try {
-            String posturl = "http://10.0.2.2:8000/listarCiclos/";
+            String posturl = "http://proyectodami-hoscanoa.rhcloud.com/listarCiclos/";
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(posturl);
             HttpResponse resp = httpclient.execute(httppost);
@@ -547,7 +520,7 @@ public class Servicio {
         String areglo="no hay nada   - ";
         int r=0;
         try {
-            String posturl = "http://10.0.2.2:8000/listarCursosPorModalidadCicloProfesor/";
+            String posturl = "http://proyectodami-hoscanoa.rhcloud.com/listarCursosPorModalidadCicloProfesor/";
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(posturl);
 
@@ -597,7 +570,7 @@ public class Servicio {
     public String  listarSecciones(Context context,String idModalidad,String  idCiclo, String idPro,String idCurso){
         String areglo="no hay nada   - ";
         try {
-            String posturl = "http://10.0.2.2:8000/listarSeccionesPorModalidadCicloProfesorCurso/";
+            String posturl = "http://proyectodami-hoscanoa.rhcloud.com/listarSeccionesPorModalidadCicloProfesorCurso/";
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(posturl);
 
@@ -644,7 +617,7 @@ public class Servicio {
     public String  listarGrupos(Context context,String idModalidad,String  idCiclo, String idPro,String idCurso,String seccionID){
         String areglo="no hay nada   - ";
         try {
-            String posturl = "http://10.0.2.2:8000/listarGruposPorModalidadCicloProfesorCursoSeccion/";
+            String posturl = "http://proyectodami-hoscanoa.rhcloud.com/listarGruposPorModalidadCicloProfesorCursoSeccion/";
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(posturl);
 
@@ -693,7 +666,7 @@ public class Servicio {
     public String  listaTipoPrueba(Context context,String idCurso){
         String areglo="no hay nada   - ";
         try {
-            String posturl = "http://10.0.2.2:8000/listarTipoDePruebasPorCurso/";
+            String posturl = "http://proyectodami-hoscanoa.rhcloud.com/listarTipoDePruebasPorCurso/";
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(posturl);
 
@@ -743,7 +716,7 @@ public class Servicio {
     public String  listaAlumnos(Context context,String idCurso,String idSeccion,String idGrupo){
         String areglo="no hay nada   - ";
         try {
-            String posturl = "http://10.0.2.2:8000/listarTipoDePruebasPorCurso/";
+            String posturl = "http://proyectodami-hoscanoa.rhcloud.com/listarTipoDePruebasPorCurso/";
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(posturl);
 

@@ -45,7 +45,7 @@ public class ExportarFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if(v==btnExportar)
         {
-            progressDialog = new ProgressDialog(context);
+            progressDialog=ProgressDialog.show(context,"Exportando Datos al Servidor","Espere por favor",true,false);
             new Exportar().execute();
         }
     }
@@ -64,8 +64,6 @@ public class ExportarFragment extends Fragment implements View.OnClickListener {
         }
 
         protected void onPostExecute(Void unused) {
-
-            cargarListado();
             progressDialog.dismiss();
         }
     }
