@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -32,7 +33,9 @@ import com.hoscanoa.developer.proyectodami.beans.CursoEvaluacion;
 import com.hoscanoa.developer.proyectodami.beans.Estado;
 import com.hoscanoa.developer.proyectodami.beans.Evaluacion;
 import com.hoscanoa.developer.proyectodami.beans.Grupo;
+import com.hoscanoa.developer.proyectodami.beans.Matricula;
 import com.hoscanoa.developer.proyectodami.beans.ModalidadEstudio;
+import com.hoscanoa.developer.proyectodami.beans.RegistroNota;
 import com.hoscanoa.developer.proyectodami.beans.Seccion;
 import com.hoscanoa.developer.proyectodami.dao.Factory;
 import com.hoscanoa.developer.proyectodami.dao.alumno.AlumnoDAO;
@@ -45,6 +48,8 @@ import com.hoscanoa.developer.proyectodami.dao.cursoEvaluacion.CursoEvaluacionDA
 import com.hoscanoa.developer.proyectodami.dao.estado.EstadoDAO;
 import com.hoscanoa.developer.proyectodami.dao.evaluacion.EvaluacionDAO;
 import com.hoscanoa.developer.proyectodami.dao.grupo.GrupoDAO;
+import com.hoscanoa.developer.proyectodami.dao.matricula.MatriculaDAO;
+import com.hoscanoa.developer.proyectodami.dao.registroNota.RegistroNotaDAO;
 import com.hoscanoa.developer.proyectodami.dao.seccion.SeccionDAO;
 import com.hoscanoa.developer.proyectodami.servicio.Servicio;
 import com.hoscanoa.developer.proyectodami.util.InputFilterMinMax;
@@ -52,12 +57,17 @@ import com.hoscanoa.developer.proyectodami.util.InputFilterMinMax;
 import java.util.ArrayList;
 
 
-public class ListadoAlumnosFragment extends Fragment {
+public class ListadoAlumnosFragment extends Fragment implements View.OnClickListener {
 
     Context context;
-    int cicloId, cursoId, seccionId, grupoId;
+    int cicloId, cursoId, seccionId, grupoId, evaluacionId, numero;
     TableLayout tabla;
+    ArrayList<Object> objetos = new  ArrayList<Object>();
+    Button btnGrabarNotas;
+
     ArrayList<Alumno> alumnos;
+    ArrayList<Matricula> matriculas;
+
     ProgressDialog progressDialog;
 
     @Override
@@ -76,15 +86,16 @@ public class ListadoAlumnosFragment extends Fragment {
         cursoId = getArguments().getInt("cursoId");
         seccionId = getArguments().getInt("seccionId");
         grupoId = getArguments().getInt("grupoId");
+        evaluacionId = getArguments().getInt("evaluacionId");
+        numero = getArguments().getInt("numero");
 
-
+        btnGrabarNotas = (Button)rootView.findViewById(R.id.btnGrabarNotas);
+        btnGrabarNotas.setOnClickListener(this);
         //Jalamos datos del SW
 
         progressDialog = new ProgressDialog(getActivity());
-        new ImportarAlumnos().execute();
-
         tabla = (TableLayout) rootView.findViewById(R.id.tblListado);
-        cargarListado();
+        new ImportarAlumnos().execute();
         return rootView;
     }
 
@@ -144,7 +155,6 @@ public class ListadoAlumnosFragment extends Fragment {
         int i=0;
 
         Resources resource = context.getResources();
-
         for (Alumno a : lista) {
             row = new TableRow(context);
             row.setLayoutParams(layoutParams);
@@ -192,7 +202,31 @@ public class ListadoAlumnosFragment extends Fragment {
             v.setBackgroundColor(Color.rgb(51, 51, 51));
             tabla.addView(v);
         }
+    }
 
+    @Override
+    public void onClick(View v) {
+        if(v==btnGrabarNotas)
+        {
+            Factory factory = Factory.getFactory(Factory.TIPO_SQLITE);
+            RegistroNotaDAO registroNotaDAO = factory.getRegistroNotaDAO(context);
+            AlumnoDAO alumnoDAO = factory.getAlumnoDAO(context);
+            MatriculaDAO matriculaDAO = factory.getMatriculaDAO(context);
+
+            Alumno alumno;
+            Matricula matricula;
+            int calificacionId;
+            String codigo;
+            for(int i = 2; i<= 2*alumnos.size(); i+=2) {
+                TableRow row = (TableRow)tabla.getChildAt(i);
+                codigo = ((TextView) row.getChildAt(0)).getText().toString();
+                calificacionId = Integer.parseInt(((EditText) row.getChildAt(3)).getText().toString());
+                alumno=alumnoDAO.buscar(codigo);
+                matricula = matriculaDAO.buscar(alumno.getAlumnoId(),cursoId, cicloId, seccionId, grupoId);
+                registroNotaDAO.insertar(new RegistroNota(matricula.getMatriculaId(), evaluacionId, calificacionId));
+           }
+            Toast.makeText(context,"Se grabo",Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -201,15 +235,23 @@ public class ListadoAlumnosFragment extends Fragment {
         protected Void doInBackground(String... params) {
             Factory factory = Factory.getFactory(Factory.TIPO_SQLITE);
             AlumnoDAO alumnoDAO = factory.getAlumnoDAO(context);
+            MatriculaDAO matriculaDAO = factory.getMatriculaDAO(context);
 
             Servicio servicio = new Servicio();
-            alumnos=servicio.importarAlumnos(cicloId, cursoId, seccionId, grupoId);
+            objetos=servicio.importarAlumnos(cicloId, cursoId, seccionId, grupoId);
+            alumnos= (ArrayList<Alumno>) objetos.get(0);
             alumnoDAO.insertar(alumnos);
+
+            matriculas= (ArrayList<Matricula>) objetos.get(1);
+            matriculaDAO.insertar(matriculas);
+
             return null;
         }
 
 
         protected void onPostExecute(Void unused) {
+
+            cargarListado();
             progressDialog.dismiss();
         }
     }

@@ -90,7 +90,13 @@ public class SQLiteCursoEvaluacionDAO implements CursoEvaluacionDAO {
                 values.put("evaluacionId",ce.getEvaluacionId());
                 values.put("numero", ce.getNumero());
                 values.put("porcentaje", ce.getPorcentaje());
-                database.insert("CURSOS_EVALUACIONES",null,values);
+                try {
+                    database.insert("CURSOS_EVALUACIONES", null, values);
+                }
+                catch (Exception e2)
+                {
+                    e2.printStackTrace();
+                }
             }
         }
         catch (Exception e){

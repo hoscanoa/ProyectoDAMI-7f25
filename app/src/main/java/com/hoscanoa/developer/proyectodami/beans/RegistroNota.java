@@ -5,9 +5,17 @@ import java.io.Serializable;
 public class RegistroNota implements Serializable {
 
      private int registroNotaId;
-     private int alumnoId;
+     private int matriculaId;
      private int cursoEvaluacionId;
      private int calificacionId;
+
+    public RegistroNota(){}
+
+    public RegistroNota( int matriculaId, int cursoEvaluacionId, int calificacionId) {
+        this.matriculaId = matriculaId;
+        this.cursoEvaluacionId = cursoEvaluacionId;
+        this.calificacionId = calificacionId;
+    }
 
     public int getRegistroNotaId() {
         return registroNotaId;
@@ -17,12 +25,12 @@ public class RegistroNota implements Serializable {
         this.registroNotaId = registroNotaId;
     }
 
-    public int getAlumnoId() {
-        return alumnoId;
+    public int getMatriculaId() {
+        return matriculaId;
     }
 
-    public void setAlumnoId(int alumnoId) {
-        this.alumnoId = alumnoId;
+    public void setMatriculaId(int matriculaId) {
+        this.matriculaId = matriculaId;
     }
 
     public int getCursoEvaluacionId() {

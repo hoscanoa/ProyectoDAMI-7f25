@@ -212,10 +212,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_REGISTRO_NOTAS = CREATE_PRAGMA + " " + "CREATE TABLE REGISTRO_NOTAS (\n" +
             "  registroNotaId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
-            "  alumnoId INTEGER NOT NULL REFERENCES ALUMNOS(alumnoId),\n" +
-            "  cursoId INTEGER NOT NULL REFERENCES CURSOS(cursoId),\n" +
-            "  evaluacionId INTEGER NOT NULL REFERENCES EVALUACIONES(evaluacionId),\n" +
-            "  calificacionesId INTEGER NOT NULL REFERENCES CALIFICACIONES(calificacionesId)\n" +
+            "  matriculaId INTEGER NOT NULL REFERENCES MATRICULA(matriculaId),\n" +
+            "  cursoEvaluacionId INTEGER NOT NULL REFERENCES CURSOS_EVALUACIONES(cursoEvaluacionId),\n" +
+            "  calificacionId INTEGER NOT NULL REFERENCES CALIFICACIONES(calificacionId)\n" +
             ");";
 
     private static final String CREATE_TABLE_CARGA_DOCENTE = "CREATE TABLE CARGA_DOCENTE (\n" +

@@ -249,12 +249,17 @@ public class RegistrarFragment extends Fragment implements AdapterView.OnItemSel
                 Curso curso = (Curso) spnCurso.getSelectedItem();
                 Seccion seccion = (Seccion) spnSeccion.getSelectedItem();
                 Grupo grupo = (Grupo) spnGrupo.getSelectedItem();
+                Evaluacion evaluacion = (Evaluacion) spnTipoPrueba.getSelectedItem();
+                CursoEvaluacion cursoEvaluacion = (CursoEvaluacion) spnNroPrueba.getSelectedItem();
+
 
                 Bundle bundle= new Bundle();
                 bundle.putInt("cicloId", ciclo.getCicloId());
                 bundle.putInt("cursoId",curso.getCursoId());
                 bundle.putInt("seccionId", seccion.getSeccionId());
                 bundle.putInt("grupoId", grupo.getGrupoId());
+                bundle.putInt("evaluacionId", evaluacion.getEvaluacionId());
+                bundle.putInt("numero", cursoEvaluacion.getNumero());
 
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

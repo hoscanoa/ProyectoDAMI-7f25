@@ -14,8 +14,10 @@ import com.hoscanoa.developer.proyectodami.beans.CursoEvaluacion;
 import com.hoscanoa.developer.proyectodami.beans.Estado;
 import com.hoscanoa.developer.proyectodami.beans.Evaluacion;
 import com.hoscanoa.developer.proyectodami.beans.Grupo;
+import com.hoscanoa.developer.proyectodami.beans.Matricula;
 import com.hoscanoa.developer.proyectodami.beans.ModalidadEstudio;
 import com.hoscanoa.developer.proyectodami.beans.Profesor;
+import com.hoscanoa.developer.proyectodami.beans.RegistroNota;
 import com.hoscanoa.developer.proyectodami.beans.Seccion;
 import com.hoscanoa.developer.proyectodami.conexion.DbHelper;
 import com.hoscanoa.developer.proyectodami.dao.Factory;
@@ -281,7 +283,8 @@ public class Servicio {
                     JSONArray arreglo2 =c.getJSONArray("CursoEvaluaciones");
                     for(int j=0;j<arreglo2.length();j++) {
                         JSONObject ce = arreglo2.getJSONObject(j);
-                        CursoEvaluacion cursoEvaluacion = new CursoEvaluacion(ce.getInt("cursoEvaluacionId"), ce.getInt("cursoId"), ce.getInt("evaluacionId"), ce.getInt("numero"), ce.getInt("porcentaje"));
+                        CursoEvaluacion cursoEvaluacion = new CursoEvaluacion(ce.getInt("cursoEvaluacionId"),
+                                ce.getInt("cursoId"), ce.getInt("evaluacionId"), ce.getInt("numero"), ce.getInt("porcentaje"));
                         cursoEvaluaciones.add(cursoEvaluacion);
                     }
                 }
@@ -387,8 +390,11 @@ public class Servicio {
         return ver;
     }
 
-    public ArrayList<Alumno> importarAlumnos(int cicloId, int cursoId, int seccionId, int grupoId) {
+    public ArrayList<Object> importarAlumnos(int cicloId, int cursoId, int seccionId, int grupoId) {
+        ArrayList<Object> objetos = new  ArrayList<Object>();
+
         ArrayList<Alumno> alumnos = new  ArrayList<Alumno>();
+        ArrayList<Matricula> matriculas = new  ArrayList<Matricula>();
 
         try {
             String posturl = "http://10.0.2.2:8000/listarAlumnosPorCicloCursoSeccionGrupo/";
@@ -420,16 +426,83 @@ public class Servicio {
                             g.getInt("estadoId"));
                     alumnos.add(alumno);
                 }
+                objetos.add(alumnos);
+                arreglo = respuestaJSON.getJSONArray("Matriculas");
+                for (int i = 0; i < arreglo.length(); i++) {
+                    JSONObject g = arreglo.getJSONObject(i);
+                    Matricula matricula = new Matricula(g.getInt("matriculaId"), g.getInt("alumnoId"),
+                            g.getInt("cicloId"), g.getInt("cursoId"),
+                            g.getInt("estadoId"), g.getInt("grupoId"),g.getInt("seccionId") );
+                    matriculas.add(matricula);
+                }
+                objetos.add(matriculas);
             }
             else
             {
-                alumnos=null;
+                objetos=null;
             }
         } catch (Exception e) {
-            alumnos=null;
+            objetos=null;
             e.printStackTrace();
         }
-        return alumnos;
+        return objetos;
+
+    }
+
+    public void exportar(ArrayList<RegistroNota> registroNotas) {
+        for(RegistroNota rn : registroNotas)
+        {
+            try {
+                String posturl = "http://10.0.2.2:8000/grabarNotaAlumnoPorCursoEvaluacionNumero/";
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost httppost = new HttpPost(posturl);
+
+                List<NameValuePair> p = new ArrayList<>();
+                p.add(new BasicNameValuePair("cicloId", String.valueOf(cicloId)));
+                p.add(new BasicNameValuePair("cursoId", String.valueOf(cursoId)));
+                p.add(new BasicNameValuePair("seccionId", String.valueOf(seccionId)));
+                p.add(new BasicNameValuePair("grupoId", String.valueOf(grupoId)));
+
+                httppost.setEntity(new UrlEncodedFormEntity(p));
+                HttpResponse resp = httpclient.execute(httppost);
+                HttpEntity ent = resp.getEntity();
+
+                String respuestaStr = EntityUtils.toString(resp.getEntity());
+                JSONObject respuestaJSON = new JSONObject(respuestaStr);
+
+                String mensaje = respuestaJSON.getString("mensaje");
+
+                if(mensaje.equals("exito")) {
+                    JSONArray arreglo = respuestaJSON.getJSONArray("Alumnos");
+                    for (int i = 0; i < arreglo.length(); i++) {
+                        JSONObject g = arreglo.getJSONObject(i);
+                        Alumno alumno = new Alumno(g.getInt("alumnoId"), g.getString("codigo"),
+                                g.getString("nombres"), g.getString("apellidoPaterno"),
+                                g.getString("apellidoMaterno"), g.getString("email"),
+                                g.getInt("estadoId"));
+                        alumnos.add(alumno);
+                    }
+                    objetos.add(alumnos);
+                    arreglo = respuestaJSON.getJSONArray("Matriculas");
+                    for (int i = 0; i < arreglo.length(); i++) {
+                        JSONObject g = arreglo.getJSONObject(i);
+                        Matricula matricula = new Matricula(g.getInt("matriculaId"), g.getInt("alumnoId"),
+                                g.getInt("cicloId"), g.getInt("cursoId"),
+                                g.getInt("estadoId"), g.getInt("grupoId"),g.getInt("seccionId") );
+                        matriculas.add(matricula);
+                    }
+                    objetos.add(matriculas);
+                }
+                else
+                {
+                    objetos=null;
+                }
+            } catch (Exception e) {
+                objetos=null;
+                e.printStackTrace();
+            }
+        }
+
 
     }
 /*

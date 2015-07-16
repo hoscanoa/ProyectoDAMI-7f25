@@ -4,7 +4,11 @@
     tools:context="com.hoscanoa.developer.proyectodami.ExportarFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+    <Button
+        android:layout_width="170dp"
+        android:layout_height="86dp"
+        android:text="Exportar Datos"
+        android:id="@+id/btnExportarDatos"
+        android:layout_gravity="center" />
 </FrameLayout>

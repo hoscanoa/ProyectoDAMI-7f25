@@ -128,4 +128,31 @@ public class SQLiteAlumnoDAO implements AlumnoDAO {
             e1.printStackTrace();
         }
     }
+
+    @Override
+    public Alumno buscar(String codigo) {
+        Alumno obj=null;
+        try {
+            DbHelper helper = new DbHelper(context);
+            SQLiteDatabase database = helper.getReadableDatabase();
+            Cursor q = database.rawQuery("SELECT * FROM ALUMNOS where codigo=?",new String[]{codigo});
+
+            if (q.moveToNext())
+            {
+                obj = new Alumno();
+                obj.setAlumnoId(q.getInt(0));
+                obj.setCodigo(q.getString(1));
+                obj.setNombres(q.getString(2));
+                obj.setApellidoPaterno(q.getString(3));
+                obj.setApellidoMaterno(q.getString(4));
+                obj.setEmail(q.getString(5));
+                obj.setEstadoId(q.getInt(6));
+            }
+            q.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return obj;
+    }
 }

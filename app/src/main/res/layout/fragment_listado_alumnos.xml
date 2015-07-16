@@ -8,13 +8,16 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="right|bottom"
+        android:weightSum="1">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="445dp"
             android:id="@+id/scrollView2"
-            android:background="@android:color/white">
+            android:background="@android:color/white"
+            android:layout_weight="1.11">
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -28,6 +31,13 @@
                     android:padding="10sp"></TableLayout>
             </HorizontalScrollView>
         </ScrollView>
+
+        <Button
+            android:layout_width="235dp"
+            android:layout_height="wrap_content"
+            android:text="Grabar Notas"
+            android:id="@+id/btnGrabarNotas"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
 </FrameLayout>

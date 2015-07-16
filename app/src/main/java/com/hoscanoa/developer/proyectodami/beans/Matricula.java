@@ -14,6 +14,19 @@ public class Matricula implements Serializable {
     private int seccionId;
     private int estadoId;
 
+    public Matricula()
+    {}
+
+    public Matricula(int matriculaId, int alumnoId, int cursoId, int grupoId, int cicloId, int seccionId, int estadoId) {
+        this.matriculaId = matriculaId;
+        this.alumnoId = alumnoId;
+        this.cursoId = cursoId;
+        this.grupoId = grupoId;
+        this.cicloId = cicloId;
+        this.seccionId = seccionId;
+        this.estadoId = estadoId;
+    }
+
     public int getMatriculaId() {
         return matriculaId;
     }
