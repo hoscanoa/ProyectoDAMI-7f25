@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.hoscanoa.developer.proyectodami.beans.Alumno;
+import com.hoscanoa.developer.proyectodami.beans.CursoEvaluacion;
 import com.hoscanoa.developer.proyectodami.beans.Estado;
 import com.hoscanoa.developer.proyectodami.beans.RegistroNota;
 import com.hoscanoa.developer.proyectodami.conexion.DbHelper;
@@ -80,7 +81,18 @@ public class SQLiteRegistroNotaDAO implements RegistroNotaDAO {
 
     @Override
     public int editar(RegistroNota obj) {
-        return 0;
+        int r=0;
+        try {
+            DbHelper helper = new DbHelper(context);
+            SQLiteDatabase database = helper.getReadableDatabase();
+            String sql="UPDATE REGISTRO_NOTAS SET calificacionId="+obj.getCalificacionId()+
+                    " WHERE registroNotaId="+obj.getRegistroNotaId()+";";
+            database.execSQL(sql);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return r;
     }
 
     @Override
@@ -88,4 +100,29 @@ public class SQLiteRegistroNotaDAO implements RegistroNotaDAO {
         return 0;
     }
 
+    @Override
+    public RegistroNota buscar(int matriculaId, int cursoEvaluacionId) {
+        RegistroNota obj = null;
+        try {
+            DbHelper helper = new DbHelper(context);
+            SQLiteDatabase database = helper.getReadableDatabase();
+            String sql="SELECT * FROM REGISTRO_NOTAS \n" +
+                    "WHERE matriculaId="+matriculaId+" AND cursoEvaluacionId="+cursoEvaluacionId+";";
+            Cursor q = database.rawQuery(sql,null);
+
+            if (q.moveToNext())
+            {
+                obj = new RegistroNota();
+                obj.setRegistroNotaId(q.getInt(0));
+                obj.setMatriculaId(q.getInt(1));
+                obj.setCursoEvaluacionId(q.getInt(2));
+                obj.setCalificacionId(q.getInt(3));
+            }
+            q.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return obj;
+    }
 }

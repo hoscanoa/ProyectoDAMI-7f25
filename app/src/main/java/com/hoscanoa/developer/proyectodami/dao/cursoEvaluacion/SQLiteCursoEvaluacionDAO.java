@@ -103,4 +103,31 @@ public class SQLiteCursoEvaluacionDAO implements CursoEvaluacionDAO {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public CursoEvaluacion buscar(int cursoId, int evaluacionId, int numero) {
+        CursoEvaluacion obj = null;
+        try {
+            DbHelper helper = new DbHelper(context);
+            SQLiteDatabase database = helper.getReadableDatabase();
+            String sql="SELECT * FROM CURSOS_EVALUACIONES \n" +
+                    "WHERE cursoId="+cursoId+" AND evaluacionId="+evaluacionId+" AND numero="+numero+";";
+            Cursor q = database.rawQuery(sql,null);
+
+            if (q.moveToNext())
+            {
+                obj = new CursoEvaluacion();
+                obj.setCursoEvaluacionId(q.getInt(0));
+                obj.setCursoId(q.getInt(1));
+                obj.setEvaluacionId(q.getInt(2));
+                obj.setNumero(q.getInt(3));
+                obj.setPorcentaje(q.getInt(4));
+            }
+            q.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return obj;
+    }
 }

@@ -106,8 +106,14 @@ public class ListadoAlumnosFragment extends Fragment implements View.OnClickList
         AlumnoDAO alumnoDAO = factory.getAlumnoDAO(context);
         RegistroNotaDAO registroNotaDAO = factory.getRegistroNotaDAO(context);
         CalificacionDAO calificacionDAO = factory.getCalificacionDAO(context);
+        CursoEvaluacionDAO cursoEvaluacionDAO = factory.getCursoEvaluacionDAO(context);
+        MatriculaDAO matriculaDAO = factory.getMatriculaDAO(context);
+
+        RegistroNota registroNota;
         Matricula matricula;
         Calificacion calificacion;
+        CursoEvaluacion cursoEvaluacion=cursoEvaluacionDAO.buscar(cursoId, evaluacionId, numero);
+
         ArrayList<Alumno> lista = alumnoDAO.listado(cicloId, cursoId, seccionId, grupoId);
 
         TableRow row;
@@ -198,9 +204,18 @@ public class ListadoAlumnosFragment extends Fragment implements View.OnClickList
             txtEstado.setText("MATRÍCULA REGULAR");
             txtEstado.setTextSize(8);
 
+            matricula = matriculaDAO.buscar(a.getAlumnoId(), cicloId, cursoId, seccionId, grupoId);
+            registroNota = registroNotaDAO.buscar(matricula.getMatriculaId(),cursoEvaluacion.getEvaluacionId());
+            if(registroNota!=null)
+            {
+               edtNota.setText(String.valueOf(registroNota.getCalificacionId()));
+            }
+            else
+            {
+                edtNota.setText(String.valueOf(0));
+            }
 
 
-            edtNota.setText(String.valueOf(0));
             row.addView(txtcod);
             row.addView(txtnom);
             row.addView(txtEstado);
@@ -222,6 +237,7 @@ public class ListadoAlumnosFragment extends Fragment implements View.OnClickList
             RegistroNotaDAO registroNotaDAO = factory.getRegistroNotaDAO(context);
             AlumnoDAO alumnoDAO = factory.getAlumnoDAO(context);
             MatriculaDAO matriculaDAO = factory.getMatriculaDAO(context);
+            RegistroNota registroNota;
 
             Alumno alumno;
             Matricula matricula;
@@ -233,7 +249,16 @@ public class ListadoAlumnosFragment extends Fragment implements View.OnClickList
                 calificacionId = Integer.parseInt(((EditText) row.getChildAt(3)).getText().toString());
                 alumno=alumnoDAO.buscar(codigo);
                 matricula = matriculaDAO.buscar(alumno.getAlumnoId(),cursoId, cicloId, seccionId, grupoId);
-                registroNotaDAO.insertar(new RegistroNota(matricula.getMatriculaId(), evaluacionId, calificacionId));
+
+                registroNota = registroNotaDAO.buscar(matricula.getMatriculaId(), evaluacionId);
+                if(registroNota==null) {
+                    registroNotaDAO.insertar(new RegistroNota(matricula.getMatriculaId(), evaluacionId, calificacionId));
+                }
+                else
+                {
+                    registroNota.setCalificacionId(calificacionId);
+                    registroNotaDAO.editar(registroNota);
+                }
            }
             progressDialog.dismiss();
             Toast.makeText(context,"Se grabo localmente los datos",Toast.LENGTH_LONG).show();

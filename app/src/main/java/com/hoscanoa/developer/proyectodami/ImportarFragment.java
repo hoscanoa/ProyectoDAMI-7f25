@@ -121,7 +121,7 @@ public class ImportarFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        progressDialog=ProgressDialog.show(getActivity(),"Verificando Identidad","Espere por favor",true,false);
+        progressDialog=ProgressDialog.show(getActivity(),"Importando Datos del Profesor","Espere por favor",true,false);
         new Importar().execute();
     }
 

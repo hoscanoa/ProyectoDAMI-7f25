@@ -9,4 +9,5 @@ import com.hoscanoa.developer.proyectodami.dao.GenericDAO;
 public interface RegistroNotaDAO extends GenericDAO<RegistroNota, Long>
 {
 
+    RegistroNota buscar(int matriculaId, int evaluacionId);
 }
