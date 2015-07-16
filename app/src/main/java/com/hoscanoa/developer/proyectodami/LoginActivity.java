@@ -120,6 +120,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
                     if(historialDAO.listar().size()>0)
                     {
+                        servicio.eliminarDatos(context);
                         if(historialDAO.buscar(profesor.getProfesorId())==null)
                         {
                             profesorDAO.insertarProfesorHistorial(profesor);

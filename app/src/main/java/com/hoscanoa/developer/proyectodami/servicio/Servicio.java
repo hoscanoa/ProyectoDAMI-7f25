@@ -312,84 +312,6 @@ public class Servicio {
 
 
 
-    public boolean verificarDatos(Context context){
-
-        String respuesta=null;
-        boolean v=false;
-
-        Factory factory = Factory.getFactory(Factory.TIPO_SQLITE);
-        ModalidadEstudioDAO modalidadEstudioDAO = factory.getModalidadEstudioDAO(context);
-        ArrayList<ModalidadEstudio> lista = modalidadEstudioDAO.listar();
-
-        System.out.println("Tamaño de modalidad "+lista.size());
-
-        CicloDAO cicloDAO = factory.getCicloDAO(context);
-        ArrayList<Ciclo> listaCiclo = cicloDAO.listar();
-        System.out.println("Tamaño de ciclos "+listaCiclo.size());
-
-
-        DbHelper sql=new DbHelper(context);
-        SQLiteDatabase db=sql.getWritableDatabase();
-        int el=(int)db.delete("MODALIDADES_ESTUDIOS",null,null);
-        int el02=(int)db.delete("CICLOS",null,null);
-
-        System.out.println("elimine de modalidad "+el);
-        System.out.println("elimine de ciclo "+el02);
-
-
-
-        ArrayList<ModalidadEstudio> lista05 = modalidadEstudioDAO.listar();
-
-        if(lista05.size()>0){
-          /*  DbHelper sql=new DbHelper(context);
-            SQLiteDatabase db=sql.getWritableDatabase();
-            int el=(int)db.delete("MODALIDADES_ESTUDIOS",null,null);
-            respuesta+="  :  se elimina "+el+" filas";*/
-            v=true;
-                respuesta="tiene datos";
-        }/*else{
-           // respuesta="no habia datos";
-            respuesta="lo de listar "+listarModalidad();
-        }*/
-
-
-        return v;
-    }
-
-    public boolean eliminarDatos(Context context){
-
-        boolean ver=false;
-        try {
-
-            DbHelper sql=new DbHelper(context);
-            SQLiteDatabase db=sql.getWritableDatabase();
-
-            db.delete("ESTADOS",null,null);
-            db.delete("sqlite_sequence",null,null);
-            db.delete("ALUMNOS",null,null);
-            db.delete("PROFESORES",null,null);
-            db.delete("CARRERAS_CURSOS",null,null);
-            db.delete("CARRERAS",null,null);
-            db.delete("CURSOS",null,null);
-            db.delete("TIPO_AULA",null,null);
-            db.delete("AULAS",null,null);
-            db.delete("DIAS",null,null);
-            db.delete("SECCIONES",null,null);
-            db.delete("HORARIOS",null,null);
-            db.delete("ALUMNOS_HORARIOS",null,null);
-            db.delete("EVALUACIONES",null,null);
-            db.delete("CURSOS_EVALUACIONES",null,null);
-            db.delete("CALIFICACIONES",null,null);
-            db.delete("REGISTRO_NOTAS",null,null);
-            ver=true;
-        }catch (Exception e){
-            ver=false;
-            System.out.println("Error de eliminar datos");
-        }
-
-        return ver;
-    }
-
     public ArrayList<Object> importarAlumnos(int cicloId, int cursoId, int seccionId, int grupoId) {
         ArrayList<Object> objetos = new  ArrayList<Object>();
 
@@ -505,6 +427,36 @@ public class Servicio {
 
 
     }
+
+
+
+    public void eliminarDatos(Context context){
+        try{
+            DbHelper sql=new DbHelper(context);
+            SQLiteDatabase db=sql.getWritableDatabase();
+            db.delete("ESTADOS",null,null);
+            db.delete("sqlite_sequence",null,null);
+            db.delete("ALUMNOS",null,null);
+            db.delete("CARRERAS_CURSOS",null,null);
+            db.delete("CARRERAS",null,null);
+            db.delete("CURSOS",null,null);
+            db.delete("TIPO_AULA",null,null);
+            db.delete("AULAS",null,null);
+            db.delete("DIAS",null,null);
+            db.delete("SECCIONES",null,null);
+            db.delete("HORARIOS",null,null);
+            db.delete("ALUMNOS_HORARIOS",null,null);
+            db.delete("EVALUACIONES",null,null);
+            db.delete("CURSOS_EVALUACIONES",null,null);
+            db.delete("CALIFICACIONES",null,null);
+            db.delete("REGISTRO_NOTAS",null,null);
+
+        }catch (Exception e){
+            System.out.println("Error de eliminar datos"+e);
+        }
+
+    }
+
 /*
     public String  listarModalidad(Context context){
         String areglo="no hay nada   - ";
