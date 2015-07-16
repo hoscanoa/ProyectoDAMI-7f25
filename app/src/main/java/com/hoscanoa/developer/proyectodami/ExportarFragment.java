@@ -63,7 +63,6 @@ public class ExportarFragment extends Fragment implements View.OnClickListener {
             return null;
         }
 
-
         protected void onPostExecute(Void unused) {
 
             cargarListado();
